@@ -1,4 +1,4 @@
-package com.example.jetpackdemo
+package com.yolo.mvvmwanandroid
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

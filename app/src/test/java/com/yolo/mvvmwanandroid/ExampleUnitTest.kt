@@ -1,4 +1,4 @@
-package com.example.jetpackdemo
+package com.yolo.mvvmwanandroid
 
 import org.junit.Test
 
