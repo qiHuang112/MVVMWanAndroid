@@ -1,16 +1,15 @@
 package com.yolo.mvvmwanandroid
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.yolo.mvvm.activity.BaseActivity
+import com.yolo.mvvmwanandroid.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+    override val layoutId = R.layout.activity_main
 
+    override fun initView() {
         btn_request.setOnClickListener {
-            MainViewModel(application).getPublicTitleData()
+            mViewModel.getPublicTitleData()
         }
     }
 }
