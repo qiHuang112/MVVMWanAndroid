@@ -36,7 +36,7 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
         mActivity = activity as AppCompatActivity
         mViewModel = ViewModelProvider(
             this, ViewModelProvider.AndroidViewModelFactory(mActivity.application)
-        ).get((this.javaClass as ParameterizedType).actualTypeArguments[0] as Class<VM>)
+        ).get((this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>)
         initView()
     }
 
