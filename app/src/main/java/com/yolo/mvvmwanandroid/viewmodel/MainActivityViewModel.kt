@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid
+package com.yolo.mvvmwanandroid.viewmodel
 
 import android.app.Application
 import android.util.Log
@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(application: Application) : BaseViewModel(application) {
+class MainActivityViewModel(application: Application) : BaseViewModel(application) {
 
     fun getPublicTitleData() {
         viewModelScope.launch {

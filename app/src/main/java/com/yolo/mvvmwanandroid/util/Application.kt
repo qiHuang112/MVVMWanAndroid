@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid
+package com.yolo.mvvmwanandroid.util
 
 import android.app.Application
 import android.content.Context
