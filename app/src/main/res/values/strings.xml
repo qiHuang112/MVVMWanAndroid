@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MVVMWanAndroid</string>
+
+    <!--menu-->
+    <string name="home">首页</string>
+    <string name="article">公众号</string>
+    <string name="tree">知识体系</string>
+    <string name="me">我的</string>
+
 </resources>

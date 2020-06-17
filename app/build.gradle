@@ -27,6 +27,10 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 def navigation_version = '2.2.2'
@@ -43,6 +47,9 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-fragment:$navigation_version"
     implementation "androidx.navigation:navigation-ui:$navigation_version"
+
+    // material
+    implementation "com.google.android.material:material:1.1.0"
 
     implementation project(path: ':MVVM')
 
