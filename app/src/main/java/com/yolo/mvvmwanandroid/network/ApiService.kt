@@ -10,5 +10,5 @@ interface ApiService {
     }
 
     @GET("wxarticle/chapters/json")
-    suspend fun getArticles(): ApiResponse<ArrayList<Article>>
+    suspend fun getArticles(): ApiResponse<List<Article>>
 }

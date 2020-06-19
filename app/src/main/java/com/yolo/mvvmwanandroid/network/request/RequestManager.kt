@@ -12,7 +12,7 @@ class RequestManager private constructor() {
     /**
      * 获取微信公众号列表
      */
-    suspend fun getArticles(): ApiResponse<ArrayList<Article>> {
+    suspend fun getArticles(): ApiResponse<List<Article>> {
         return NetworkApi.service.getArticles()
     }
 }

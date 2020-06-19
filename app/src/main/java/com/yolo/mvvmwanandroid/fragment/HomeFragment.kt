@@ -10,8 +10,5 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
     override val layoutId = R.layout.fragment_home
 
     override fun initView() {
-        btn_request.setOnClickListener {
-            mViewModel.getPublicTitleData()
-        }
     }
 }
