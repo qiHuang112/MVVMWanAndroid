@@ -5,8 +5,8 @@ package com.yolo.mvvm.network
  * 其他结果如网络异常等可继承此基类，根据code判断业务状态
  */
 abstract class BaseResponse<T> {
-    abstract var code: Int
-    abstract var msg: String
+    abstract var errorCode: Int
+    abstract var errorMsg: String
     abstract var data: T
-    protected fun isSuccess() = code == 0
+    protected fun isSuccess() = errorCode == 0
 }
