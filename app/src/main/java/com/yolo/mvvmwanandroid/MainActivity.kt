@@ -7,6 +7,11 @@ import com.yolo.mvvmwanandroid.databinding.ActivityMainBinding
 import com.yolo.mvvmwanandroid.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * 项目为单Activity多Fragment模式
+ * MainActivity为唯一Activity
+ * @author qiHuang112
+ */
 class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() {
     override val layoutId = R.layout.activity_main
 

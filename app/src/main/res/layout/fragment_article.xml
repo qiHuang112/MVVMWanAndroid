@@ -17,7 +17,7 @@
             android:id="@+id/tl_articles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable" />
+            app:tabMode="auto" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vp_articles"

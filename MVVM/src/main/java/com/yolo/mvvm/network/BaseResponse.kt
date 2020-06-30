@@ -8,5 +8,5 @@ abstract class BaseResponse<T> {
     abstract var errorCode: Int
     abstract var errorMsg: String
     abstract var data: T
-    protected fun isSuccess() = errorCode == 0
+    fun isSuccess() = errorCode == 0
 }

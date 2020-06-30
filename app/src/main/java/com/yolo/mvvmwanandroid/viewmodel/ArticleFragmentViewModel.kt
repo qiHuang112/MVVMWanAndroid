@@ -11,21 +11,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * [com.yolo.mvvmwanandroid.fragment.ArticleFragment]
+ */
 class ArticleFragmentViewModel(application: Application) : BaseViewModel(application) {
 
     val articles: MutableLiveData<List<Article>> by lazy {
         MutableLiveData<List<Article>>()
     }
 
-    fun getPublicTitleData() {
+    fun getArticleTitles() {
         viewModelScope.launch {
             kotlin.runCatching {
-                withContext(Dispatchers.IO) { RequestManager.instance.getArticles() }
+                withContext(Dispatchers.IO) { RequestManager.instance.getArticleTitles() }
             }.onSuccess {
-                Log.d("getPublicTitleData", "$it")
+                Log.d("getArticleTitles", "$it")
                 articles.value = it.data
             }.onFailure {
-                Log.e("getPublicTitleData", "$it")
+                Log.e("getArticleTitles", "$it")
             }
         }
     }

@@ -1,9 +1,11 @@
 package com.yolo.mvvmwanandroid.network
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import com.yolo.mvvm.network.BaseNetworkApi
 import com.yolo.mvvm.network.CoroutineAdapterFactory
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -20,6 +22,7 @@ class NetworkApi private constructor() : BaseNetworkApi() {
         builder.connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(httpLoggingInterceptor)
     }
 
     /**
@@ -38,6 +41,13 @@ class NetworkApi private constructor() : BaseNetworkApi() {
         val service: ApiService by lazy {
             instance.getApi(ApiService::class.java, ApiService.SERVER_URL)
         }
+
+        // HTTP日志
+        private val httpLoggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+            override fun log(message: String) {
+                Log.d("HttpLoggingInterceptor", message)
+            }
+        }).setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
 }

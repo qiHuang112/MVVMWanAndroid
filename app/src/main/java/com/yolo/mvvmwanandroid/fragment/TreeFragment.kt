@@ -5,6 +5,9 @@ import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentTreeBinding
 import com.yolo.mvvmwanandroid.viewmodel.TreeFragmentViewModel
 
+/**
+ *知识体系
+ */
 class TreeFragment : BaseFragment<TreeFragmentViewModel, FragmentTreeBinding>() {
     override val layoutId = R.layout.fragment_tree
 

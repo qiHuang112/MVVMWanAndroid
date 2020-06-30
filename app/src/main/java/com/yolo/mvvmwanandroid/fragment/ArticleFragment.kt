@@ -11,20 +11,26 @@ import com.yolo.mvvmwanandroid.network.bean.Article
 import com.yolo.mvvmwanandroid.viewmodel.ArticleFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_article.*
 
+/**
+ * 公众号
+ * @author qiHuang112
+ */
 class ArticleFragment : BaseFragment<ArticleFragmentViewModel, FragmentArticleBinding>() {
     override val layoutId = R.layout.fragment_article
 
     override fun initView() {
 
-        mViewModel.getPublicTitleData()
+        // 进入公众号模块请求公众号的title
+        mViewModel.getArticleTitles()
 
+        // 根据请求结果初始化Viewpager和TabLayout
         mViewModel.articles.observe(this, Observer { articles: List<Article> ->
             vp_articles.adapter = object : FragmentStateAdapter(this) {
                 override fun getItemCount() = articles.size
 
-                override fun createFragment(position: Int) = TestFragment().apply {
+                override fun createFragment(position: Int) = ArticleContentFragment().apply {
                     arguments = Bundle().apply {
-                        putString("title", "page:$position")
+                        putInt("id", articles[position].id)
                     }
                 }
             }

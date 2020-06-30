@@ -9,4 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * [com.yolo.mvvmwanandroid.fragment.HomeFragment]
+ */
 class HomeFragmentViewModel(application: Application) : BaseViewModel(application)
