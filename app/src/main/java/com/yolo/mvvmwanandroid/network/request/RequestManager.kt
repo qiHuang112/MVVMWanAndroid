@@ -1,9 +1,7 @@
 package com.yolo.mvvmwanandroid.network.request
 
 import com.yolo.mvvmwanandroid.network.NetworkApi
-import com.yolo.mvvmwanandroid.network.bean.Article
-import com.yolo.mvvmwanandroid.network.bean.ArticleContent
-import com.yolo.mvvmwanandroid.network.bean.PageData
+import com.yolo.mvvmwanandroid.network.bean.*
 import com.yolo.mvvmwanandroid.network.response.ApiResponse
 
 class RequestManager private constructor() {
@@ -23,5 +21,16 @@ class RequestManager private constructor() {
      */
     suspend fun getArticleContents(page: Int, id: Int = 0): ApiResponse<PageData<ArticleContent>> {
         return NetworkApi.service.getArticleContents(page, id)
+    }
+
+    /**
+     * 获取banner
+     */
+    suspend fun getBanner():ApiResponse<List<BannerBean>>{
+        return NetworkApi.service.getBanner()
+    }
+
+    suspend fun getBlogs(page: Int):ApiResponse<PageData<Blog>>{
+        return NetworkApi.service.getBlog(page)
     }
 }

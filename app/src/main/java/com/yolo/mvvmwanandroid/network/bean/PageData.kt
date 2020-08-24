@@ -7,6 +7,11 @@ import java.io.Serializable
  * @author qiHuang112
  */
 data class PageData<T>(
-    var curPage: Int = 0,
-    var datas: List<T> = listOf()
+    val offset: Int,
+    val size: Int,
+    val total: Int,
+    val pageCount: Int,
+    val curPage: Int,
+    val over: Boolean,
+    val datas: List<T>
 ) : Serializable

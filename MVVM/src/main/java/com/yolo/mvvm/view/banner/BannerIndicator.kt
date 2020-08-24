@@ -12,7 +12,7 @@ import com.yolo.mvvm.R
  * @author yolo.huang
  * @date 2020/6/29
  */
-class BannerIndicator(
+class BannerIndicator @JvmOverloads constructor(
     mContext: Context, attrs: AttributeSet? = null,
     defStyleAttr:Int = 0) : LinearLayout(mContext,attrs,defStyleAttr)  {
 

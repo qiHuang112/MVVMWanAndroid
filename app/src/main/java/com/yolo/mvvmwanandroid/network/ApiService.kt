@@ -17,4 +17,10 @@ interface ApiService {
         @Path("page") page: Int,
         @Path("id") id: Int
     ): ApiResponse<PageData<ArticleContent>>
+
+    @GET("banner/json")
+    suspend fun getBanner():ApiResponse<List<BannerBean>>
+
+    @GET("article/list/{page}/json")
+    suspend fun getBlog(@Path("page") page: Int):ApiResponse<PageData<Blog>>
 }

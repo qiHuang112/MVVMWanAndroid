@@ -20,7 +20,7 @@ import com.yolo.mvvm.view.viewpager.BaseViewPager
  * @author yolo.huang
  * @date 2020/6/29
  */
-class BannerView(
+class BannerView @JvmOverloads constructor(
     mContext: Context, attrs: AttributeSet? = null,
     defStyleAttr:Int = 0) : LinearLayout(mContext,attrs,defStyleAttr)  {
 
@@ -110,7 +110,7 @@ class BannerView(
     /**
      * 开始轮播
      */
-    private fun startAutoScroll() {
+    fun startAutoScroll() {
         if (!scrollable) {
             return
         }
@@ -237,6 +237,10 @@ class BannerView(
                 mItems.addAll(itemList)
             }
             notifyDataSetChanged()
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
         }
 
     }

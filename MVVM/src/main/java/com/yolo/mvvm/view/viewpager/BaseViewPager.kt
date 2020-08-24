@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager
  * @author yolo.huang
  * @date 2020/6/28
  */
-class BaseViewPager(context: Context,attr: AttributeSet): ViewPager(context,attr) {
+class BaseViewPager @JvmOverloads constructor(context: Context, attr: AttributeSet): ViewPager(context,attr) {
 
     var scrollble = true
 

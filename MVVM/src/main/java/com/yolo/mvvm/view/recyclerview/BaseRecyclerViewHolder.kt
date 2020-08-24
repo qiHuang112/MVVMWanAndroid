@@ -52,11 +52,6 @@ class BaseRecyclerViewHolder constructor(val context:Context,var mItemView: View
         return view as T
     }
 
-    /**
-     * 使用这个方法获取itemView的ViewDataBinding
-     */
-    fun <V : ViewDataBinding> getBinding(): V? {
-        return DataBindingUtil.bind(mItemView)
-    }
-
 }
+
+class BaseBindingViewHolder<VB : ViewDataBinding>(val binding: VB) : RecyclerView.ViewHolder(binding.root)
