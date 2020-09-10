@@ -21,15 +21,10 @@ class HomeFragmentViewModel(application: Application) : BaseViewModel(applicatio
     }
 
     fun getBanner(){
-        viewModelScope.launch {
-            kotlin.runCatching {
-                withContext(Dispatchers.IO) { RequestManager.instance.getBanner() }
-            }.onSuccess {
-                Log.d("getBanner", "$it")
-                banner.value = it
-            }.onFailure {
-                Log.e("getBanner", "$it")
+        launch(
+            block = {
+                banner.value  = RequestManager.instance.getBanner()
             }
-        }
+        )
     }
 }

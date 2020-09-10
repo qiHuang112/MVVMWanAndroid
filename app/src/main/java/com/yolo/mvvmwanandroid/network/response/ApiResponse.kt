@@ -10,14 +10,5 @@ data class ApiResponse<T>(
     override var errorCode: Int,
     override var errorMsg: String,
     override var data: T
-) : BaseResponse<T>(){
-    fun apiData():T{
-        if(errorCode==0){
-            return data
-        }else{
-            throw ApiException(errorCode,errorMsg)
-        }
-    }
-}
+) : BaseResponse<T>()
 
-class ApiException(var code:Int, override val message: String):RuntimeException()

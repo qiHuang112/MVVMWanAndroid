@@ -1,17 +1,11 @@
 package com.yolo.mvvmwanandroid.util
 
-import android.app.Application
-import android.content.Context
 import android.content.ContextWrapper
+import com.yolo.mvvm.BaseApplication
+import com.yolo.mvvm.util.CrashHandler
 
-private lateinit var INSTANCE: Context
 
-class Application : Application() {
-    override fun onCreate() {
-        super.onCreate()
-        INSTANCE = this
-        CrashHandler.instance.init() // 崩溃信息收集
-    }
+class Application : BaseApplication() {
+
 }
 
-object AppContext : ContextWrapper(INSTANCE)

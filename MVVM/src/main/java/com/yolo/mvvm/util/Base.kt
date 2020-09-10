@@ -1,4 +1,6 @@
-package com.yolo.mvvmwanandroid.util
+package com.yolo.mvvm.util
+
+import com.yolo.mvvm.AppContext
 
 // toInt是向下取整的，所以加上0.5让它四舍五入
 val Int.dp: Int

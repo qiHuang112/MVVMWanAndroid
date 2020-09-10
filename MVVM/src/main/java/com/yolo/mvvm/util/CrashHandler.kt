@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.util
+package com.yolo.mvvm.util
 
 import android.util.Log
 import kotlin.system.exitProcess
