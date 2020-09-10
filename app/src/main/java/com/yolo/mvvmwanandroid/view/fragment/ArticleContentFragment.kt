@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.fragment
+package com.yolo.mvvmwanandroid.view.fragment
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +14,11 @@ import kotlinx.android.synthetic.main.fragment_article_content.*
  * @author qiHuang112
  */
 class ArticleContentFragment : BaseFragment<ArticleContentFragmentViewModel, FragmentArticleContentBinding>() {
+
+    companion object{
+        val instance = ArticleContentFragment()
+    }
+
     override val layoutId = R.layout.fragment_article_content
 
     override fun initView() {

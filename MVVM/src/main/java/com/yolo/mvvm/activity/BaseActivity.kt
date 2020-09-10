@@ -21,9 +21,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
         mDataBinding.lifecycleOwner = this
         mViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application))
             .get((this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>)
-        initView()
+        initView(savedInstanceState)
     }
 
-    abstract fun initView()
+    abstract fun initView(savedInstanceState: Bundle?)
 
 }

@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.fragment
+package com.yolo.mvvmwanandroid.view.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
@@ -16,6 +16,11 @@ import kotlinx.android.synthetic.main.fragment_article.*
  * @author qiHuang112
  */
 class ArticleFragment : BaseFragment<ArticleFragmentViewModel, FragmentArticleBinding>() {
+
+    companion object{
+        val instance = ArticleFragment()
+    }
+
     override val layoutId = R.layout.fragment_article
 
     override fun initView() {

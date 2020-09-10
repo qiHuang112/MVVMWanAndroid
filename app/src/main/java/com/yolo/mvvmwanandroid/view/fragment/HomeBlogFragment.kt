@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.fragment
+package com.yolo.mvvmwanandroid.view.fragment
 
 import androidx.lifecycle.Observer
 import com.yolo.mvvm.fragment.BaseFragment
@@ -15,6 +15,11 @@ import com.yolo.mvvmwanandroid.viewmodel.HomeBlogFragmentViewModel
  * @date 2020/7/2
  */
 class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogBinding>() {
+
+    companion object{
+        val instance =  HomeBlogFragment()
+    }
+
     override val layoutId: Int
         get() = R.layout.fragment_home_blog
 

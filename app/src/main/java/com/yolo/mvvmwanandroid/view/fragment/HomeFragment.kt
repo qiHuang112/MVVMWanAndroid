@@ -1,13 +1,10 @@
-package com.yolo.mvvmwanandroid.fragment
+package com.yolo.mvvmwanandroid.view.fragment
 
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.yolo.mvvm.fragment.BaseFragment
 import com.yolo.mvvm.util.ImageOptions
 import com.yolo.mvvm.util.loadImage
@@ -25,6 +22,10 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
     private lateinit var fragments:List<Fragment>
 
     override val layoutId = R.layout.fragment_home
+
+    companion object{
+        val instance = HomeFragment()
+    }
 
     override fun initView() {
         mDataBinding.listener =

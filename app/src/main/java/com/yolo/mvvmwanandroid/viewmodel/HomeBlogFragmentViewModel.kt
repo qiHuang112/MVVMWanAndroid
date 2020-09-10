@@ -2,14 +2,10 @@ package com.yolo.mvvmwanandroid.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.yolo.mvvm.viewmodel.BaseViewModel
 import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.network.request.RequestManager
 import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * @author yolo.huang

@@ -7,6 +7,9 @@
     <string name="tree">知识体系</string>
     <string name="me">我的</string>
 
+    <string name="press_again_to_exit">再按一次退出</string>
+
+
     <string name="tab_hot">热门</string>
     <string name="tab_plaza">广场</string>
     <string name="tab_project">项目</string>
