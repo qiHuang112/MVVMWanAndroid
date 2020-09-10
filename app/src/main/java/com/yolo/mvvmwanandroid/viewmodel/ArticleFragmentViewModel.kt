@@ -26,7 +26,7 @@ class ArticleFragmentViewModel(application: Application) : BaseViewModel(applica
                 withContext(Dispatchers.IO) { RequestManager.instance.getArticleTitles() }
             }.onSuccess {
                 Log.d("getArticleTitles", "$it")
-                articles.value = it.data
+                articles.value = it
             }.onFailure {
                 Log.e("getArticleTitles", "$it")
             }

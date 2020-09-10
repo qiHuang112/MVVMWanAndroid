@@ -26,7 +26,7 @@ class HomeFragmentViewModel(application: Application) : BaseViewModel(applicatio
                 withContext(Dispatchers.IO) { RequestManager.instance.getBanner() }
             }.onSuccess {
                 Log.d("getBanner", "$it")
-                banner.value = it.data
+                banner.value = it
             }.onFailure {
                 Log.e("getBanner", "$it")
             }

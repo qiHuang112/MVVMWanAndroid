@@ -1,12 +1,12 @@
 package com.yolo.mvvmwanandroid.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.yolo.mvvm.viewmodel.BaseViewModel
 import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.network.request.RequestManager
+import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -18,22 +18,67 @@ import kotlinx.coroutines.withContext
  */
 class HomeBlogFragmentViewModel(application: Application):BaseViewModel(application){
 
-    val blogs : MutableLiveData<List<Blog>> = MutableLiveData()
-    var page =0
 
-    fun getBlogs(isReflash : Boolean){
-        if(isReflash) page = 0
-        viewModelScope.launch {
-            kotlin.runCatching {
-                withContext(Dispatchers.IO){
-                    RequestManager.instance.getBlogs(page)
+    companion object{
+        const val INITIAL_PAGE = 0
+    }
+
+    val blog : MutableLiveData<MutableList<Blog>> = MutableLiveData()
+    val refreshStatus:MutableLiveData<Boolean> = MutableLiveData()
+    val loadMoreStatus:MutableLiveData<LoadMoreStatus> = MutableLiveData()
+    var page = INITIAL_PAGE
+
+    fun getBlog(){
+        launch(
+            block = {
+                val topDeferred = async {
+                     RequestManager.instance.getTopBlog()
                 }
-            }.onSuccess {
-                page = it.data.curPage
-                blogs.value = it.data.datas
-            }.onFailure {
+                val blogDeferred = async {
+                     RequestManager.instance.getBlogs(INITIAL_PAGE)
+                }
+                val topBlog = topDeferred.await().apply {
+                    forEach {
+                        it.top = true
+                    }
+                }
+                val blogs = blogDeferred.await()
 
+                page = blogs.curPage
+
+                blog.value = mutableListOf<Blog>().apply {
+                    addAll(topBlog)
+                    addAll(blogs.datas)
+                }
+
+                refreshStatus.value = false
+            },
+            error = {
+                refreshStatus.value = false
             }
-        }
+        )
+    }
+
+    fun getMoreBlog(){
+
+        launch(
+            block = {
+                val moreBlog = RequestManager.instance.getBlogs(page)
+                val collectionsList = blog.value ?: mutableListOf()
+                page = moreBlog.curPage
+                collectionsList.addAll(moreBlog.datas)
+                blog.value = collectionsList
+                loadMoreStatus.value =if(moreBlog.offset>=moreBlog.total){
+                    LoadMoreStatus.END
+                }else{
+                    LoadMoreStatus.COMPLETED
+
+                }
+            },
+            error = {
+
+                loadMoreStatus.value = LoadMoreStatus.ERROR
+            }
+        )
     }
 }

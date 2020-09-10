@@ -15,12 +15,13 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
     RecyclerView.Adapter<BaseBindingViewHolder<ViewDataBinding>>() {
 
     private var mSelectionPosition = -1
-    var itemListener: OnItemClickListener? = null
-    var itemLongListener: OnItemLongClickListener? = null
+    var itemListener: (Int,View) ->Unit = {  i: Int,view: View -> }
+    var itemLongListener: (Int,View) ->Unit = {  i: Int,view: View -> }
 
     //统一的头部view和底部view
     private var mHeaderView: Int = -1
     private var mFooterView: Int = -1
+    //private var mLoadMoreView:LoadMoreView? = null
 
     companion object {
         //防止多次点击的time，后续可以用aop来避免多次点击
@@ -29,6 +30,7 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
         //头部，底部和普通的viewType
         const val TYPE_HEADER = -1
         const val TYPE_FOOTER = -2
+        const val TYPE_LOAD_MORE = -3
         const val TYPE_NORMAL = 0
     }
 
@@ -61,6 +63,9 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
         if (isHasFooter()) {
             size += 1
         }
+        /*if(isHasLoadMoreView()){
+            size += 1
+        }*/
         return size
     }
 
@@ -71,6 +76,11 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
     private fun isHasFooter(): Boolean {
         return mFooterView != -1
     }
+
+ /*   private fun isHasLoadMoreView():Boolean{
+        return mLoadMoreView != null
+    }*/
+
 
     open fun setHeaderView(headerView: Int) {
         mHeaderView = headerView
@@ -86,6 +96,15 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
         notifyItemInserted(position)
     }
 
+/*    open fun setLoadMoreView(loadMore:LoadMoreView){
+        mLoadMoreView = loadMore
+        var position = mHelper.currentList.size
+        if(isHasHeader()){
+            position +=1
+        }
+        notifyItemChanged(position)
+    }*/
+
     override fun getItemViewType(position: Int): Int {
         if (isHasHeader() && position == 0) {
             return TYPE_HEADER
@@ -96,6 +115,10 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
         if (isHasFooter() && position == itemCount - 1) {
             return TYPE_FOOTER
         }
+
+        /*if(isHasLoadMoreView() && position == itemCount-1){
+            return TYPE_LOAD_MORE
+        }*/
 
         return getItemViewTypeFinal(position)
     }
@@ -115,7 +138,7 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
             return BaseBindingViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
-                    getLayoutId(mHeaderView),
+                    mHeaderView,
                     parent,
                     false
                 )
@@ -125,12 +148,21 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
             return BaseBindingViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
-                    getLayoutId(mFooterView),
+                    mFooterView,
                     parent,
                     false
                 )
             )
         }
+        /*if(isHasLoadMoreView()&&viewType == TYPE_LOAD_MORE){
+            return BaseBindingViewHolder(
+                DataBindingUtil.inflate(LayoutInflater.from(parent.context),
+                    mLoadMoreView!!.layoutId,
+                    parent,
+                    false
+                )
+            )
+        }*/
         return BaseBindingViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
@@ -148,6 +180,13 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
         if (getItemViewType(position) == TYPE_FOOTER) {
             return
         }
+        if(getItemViewType(position) == TYPE_LOAD_MORE){
+            //mLoadMoreView?.convert(holder)
+            holder.binding.root.setOnClickListener {
+                //TODO
+            }
+
+        }
         var finalPotion = position
         if (isHasHeader()) {
             finalPotion -= 1
@@ -155,9 +194,9 @@ abstract class BaseRecyclerAdapter<T>(var diffCallback: DiffUtil.ItemCallback<T>
         val data = getItem(finalPotion)
         setVariable(data, finalPotion, holder)
         holder.binding.executePendingBindings()
-        holder.binding.root.setOnClickListener { v -> itemListener?.onItemClick(finalPotion, v) }
+        holder.binding.root.setOnClickListener { v -> itemListener(finalPotion, v) }
         holder.binding.root.setOnLongClickListener { v ->
-            itemLongListener?.onItemLongClick(finalPotion, v)
+            itemLongListener(finalPotion, v)
             false
         }
     }

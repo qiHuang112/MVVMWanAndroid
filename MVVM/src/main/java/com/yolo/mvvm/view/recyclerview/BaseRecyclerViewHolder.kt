@@ -14,7 +14,7 @@ import com.yolo.mvvm.R
  * @author yolo.huang
  * @date 2020/6/28
  */
-class BaseRecyclerViewHolder constructor(val context:Context,var mItemView: View,var viewType:Int):RecyclerView.ViewHolder(mItemView) {
+open class BaseRecyclerViewHolder constructor(var mItemView: View):RecyclerView.ViewHolder(mItemView) {
 
     var mViews:SparseArray<View> = SparseArray()
 
@@ -23,19 +23,28 @@ class BaseRecyclerViewHolder constructor(val context:Context,var mItemView: View
         /**
          * 使用此方法直接获取holder，然后在adapter的bindItemViewHolder方法中对itemView进行数据绑定
          */
-        fun get(rootView: ViewGroup,layoutId:Int,viewType:Int):BaseRecyclerViewHolder{
+        fun get(rootView: ViewGroup,layoutId:Int):BaseRecyclerViewHolder{
             val itemView = LayoutInflater.from(rootView.context).inflate(layoutId,rootView,false)
-            return BaseRecyclerViewHolder(rootView.context,itemView,viewType)
+            return BaseRecyclerViewHolder(itemView)
         }
 
         /**
          * 直接使用 itemView 来加载到recyclerView中的话，会出现设置match_parent无效的情况。
          * 所以需要在外层包裹一层ViewGroup
          */
-        fun get(rootView: ViewGroup,itemView: View,viewType: Int):BaseRecyclerViewHolder{
+        fun get(rootView: ViewGroup,itemView: View):BaseRecyclerViewHolder{
             val viewGroup:ViewGroup = LayoutInflater.from(rootView.context).inflate(R.layout.item_root_layout,rootView,false) as ViewGroup
             viewGroup.addView(itemView)
-            return BaseRecyclerViewHolder(rootView.context,viewGroup,viewType)
+            return BaseRecyclerViewHolder(viewGroup)
+        }
+    }
+
+    fun setGone(resId:Int,gone:Boolean){
+        val view = getView<View>(resId)
+        if(gone){
+            view.visibility = View.GONE
+        }else{
+            view.visibility = View.VISIBLE
         }
     }
 
@@ -54,4 +63,4 @@ class BaseRecyclerViewHolder constructor(val context:Context,var mItemView: View
 
 }
 
-class BaseBindingViewHolder<VB : ViewDataBinding>(val binding: VB) : RecyclerView.ViewHolder(binding.root)
+class BaseBindingViewHolder<VB : ViewDataBinding>(val binding: VB) : BaseRecyclerViewHolder(binding.root)
