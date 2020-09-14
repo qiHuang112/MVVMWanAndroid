@@ -15,7 +15,7 @@
         <!--阴影边界-->
         <item name="android:outlineProvider">background</item>
         <!--window背景-->
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
 
         <item name="android:textAllCaps">false</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>

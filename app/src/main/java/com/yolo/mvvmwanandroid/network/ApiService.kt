@@ -26,4 +26,13 @@ interface ApiService {
 
     @GET("article/top/json")
     suspend fun getTopBlog():ApiResponse<List<Blog>>
+
+    @GET("project/tree/json")
+    suspend fun getProjectTitle():ApiResponse<List<Category>>
+
+    @GET("article/listproject/{page}/json")
+    suspend fun getTopProject(@Path("page")page: Int):ApiResponse<PageData<Blog>>
+
+    @GET("project/list/{page}/json")
+    suspend fun getProject(@Path("page")page: Int,@Query("cid") cid: Int):ApiResponse<PageData<Blog>>
 }

@@ -50,7 +50,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
         mViewModel.getBanner()
 
         fragments = listOf(
-            HomeBlogFragment(), HomeBlogFragment(),HomeBlogFragment(),HomeBlogFragment()
+            HomeBlogFragment(), ProjectFragment(),HomeBlogFragment(),HomeBlogFragment()
         )
 
         val tabTitle = listOf<String>(

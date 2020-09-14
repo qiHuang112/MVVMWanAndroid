@@ -43,4 +43,27 @@ class RequestManager private constructor() {
     suspend fun getTopBlog():List<Blog>{
         return NetworkApi.service.getTopBlog().apiData()
     }
+
+    /**
+     * 获取项目分类
+     */
+    suspend fun getProjectTitle():List<Category>{
+        return NetworkApi.service.getProjectTitle().apiData()
+    }
+
+    /**
+     * 获取最新项目
+     */
+    suspend fun getTopProject(page:Int):PageData<Blog>{
+        return NetworkApi.service.getTopProject(page).apiData()
+    }
+
+    /**
+     * 获取分类下项目信息
+     */
+    suspend fun getProject(page: Int,cid:Int):PageData<Blog>{
+        return NetworkApi.service.getProject(page,cid).apiData()
+    }
+
+
 }

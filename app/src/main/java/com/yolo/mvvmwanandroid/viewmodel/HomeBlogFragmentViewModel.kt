@@ -25,6 +25,7 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
     var page = INITIAL_PAGE
 
     fun getBlog(){
+        refreshStatus.value = true
         launch(
             block = {
                 val topDeferred = async {
@@ -56,7 +57,6 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
     }
 
     fun getMoreBlog(){
-
         launch(
             block = {
                 val moreBlog = RequestManager.instance.getBlogs(page)

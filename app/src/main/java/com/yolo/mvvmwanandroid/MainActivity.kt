@@ -65,7 +65,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
         if (currentTimMillis - previousTimeMillis < 2000) {
             super.onBackPressed()
         } else {
-            showToast(this,R.string.press_again_to_exit)
+            showToast(R.string.press_again_to_exit)
             previousTimeMillis = currentTimMillis
         }
     }

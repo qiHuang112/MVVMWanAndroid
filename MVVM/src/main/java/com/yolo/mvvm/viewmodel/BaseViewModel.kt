@@ -53,18 +53,18 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
                         //未登录
                     }
                     else ->{
-                        showToast(AppContext,e.message)
+                        AppContext.showToast(e.message)
                     }
                 }
             }
             is ConnectException, is SocketTimeoutException, is UnknownHostException, is HttpException ->{
-                showToast(AppContext, R.string.network_request_failed)
+                AppContext.showToast( R.string.network_request_failed)
             }
             is JsonParseException ->{
-                showToast(AppContext,R.string.api_data_parse_error)
+                AppContext.showToast(R.string.api_data_parse_error)
             }
             else -> {
-                showToast(AppContext,e.message?:AppContext.getString(R.string.error_unknown))
+                AppContext.showToast(e.message?:AppContext.getString(R.string.error_unknown))
             }
 
         }
