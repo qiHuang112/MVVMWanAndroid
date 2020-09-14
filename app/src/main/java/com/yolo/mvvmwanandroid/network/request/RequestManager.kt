@@ -33,7 +33,7 @@ class RequestManager private constructor() {
     /**
      * 获取最新博客，参数为页数
      */
-    suspend fun getBlogs(page: Int):PageData<Blog>{
+    suspend fun getBlog(page: Int):PageData<Blog>{
         return NetworkApi.service.getBlog(page).apiData()
     }
 

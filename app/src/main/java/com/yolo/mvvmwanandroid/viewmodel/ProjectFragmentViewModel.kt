@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.yolo.mvvm.viewmodel.BaseViewModel
 import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.network.bean.Category
-import com.yolo.mvvmwanandroid.network.request.RequestManager
+import com.yolo.mvvmwanandroid.repository.ProjectRepository
 import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
 
 /**
@@ -20,6 +20,9 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
         const val INITIAL_POSITION = 0
 
     }
+    
+    private val projectRepository by lazy { ProjectRepository() }
+    
     val refreshStatus:MutableLiveData<Boolean> = MutableLiveData()
     val loadMoreStatus:MutableLiveData<LoadMoreStatus> = MutableLiveData()
 
@@ -39,9 +42,9 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
 
         launch(
             block = {
-                val topProjects = RequestManager.instance.getTopProject(INITIAL_PAGE)
+                val topProjects = projectRepository.getTopProject(INITIAL_PAGE)
 
-                val titleCategory = RequestManager.instance.getProjectTitle()
+                val titleCategory = projectRepository.getProjectTitle()
 
                 currentPosition.value = INITIAL_POSITION
                 title.value?.addAll(titleCategory)
@@ -69,9 +72,9 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
                 val category = title.value?:return@launch
                 val cid = category[position].id
                 val project = if(cid == -1){
-                    RequestManager.instance.getTopProject(INITIAL_PAGE)
+                    projectRepository.getTopProject(INITIAL_PAGE)
                 }else{
-                    RequestManager.instance.getProject(INITIAL_PAGE,cid)
+                    projectRepository.getProject(INITIAL_PAGE,cid)
                 }
                 projects.value = project.datas.toMutableList()
                 page = project.curPage
@@ -93,9 +96,9 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
                 val cid = category[position].id
 
                 val project = if(cid == -1){
-                    RequestManager.instance.getTopProject(page)
+                    projectRepository.getTopProject(page)
                 }else{
-                    RequestManager.instance.getProject(page,cid)
+                    projectRepository.getProject(page,cid)
                 }
                 projects.value?.addAll(project.datas)
                 page = project.curPage

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.yolo.mvvm.viewmodel.BaseViewModel
 import com.yolo.mvvmwanandroid.network.bean.Blog
-import com.yolo.mvvmwanandroid.network.request.RequestManager
+import com.yolo.mvvmwanandroid.repository.BlogRepository
 import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
 
 /**
@@ -19,6 +19,8 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
         const val INITIAL_PAGE = 0
     }
 
+    private val blogRepository by lazy { BlogRepository() }
+
     val blog : MutableLiveData<MutableList<Blog>> = MutableLiveData()
     val refreshStatus:MutableLiveData<Boolean> = MutableLiveData()
     val loadMoreStatus:MutableLiveData<LoadMoreStatus> = MutableLiveData()
@@ -29,10 +31,10 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
         launch(
             block = {
                 val topDeferred = async {
-                     RequestManager.instance.getTopBlog()
+                     blogRepository.getTopBlog()
                 }
                 val blogDeferred = async {
-                     RequestManager.instance.getBlogs(INITIAL_PAGE)
+                     blogRepository.getBlog(INITIAL_PAGE)
                 }
                 val topBlog = topDeferred.await().apply {
                     forEach {
@@ -59,7 +61,7 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
     fun getMoreBlog(){
         launch(
             block = {
-                val moreBlog = RequestManager.instance.getBlogs(page)
+                val moreBlog = blogRepository.getBlog(page)
                 val collectionsList = blog.value ?: mutableListOf()
                 page = moreBlog.curPage
                 collectionsList.addAll(moreBlog.datas)
