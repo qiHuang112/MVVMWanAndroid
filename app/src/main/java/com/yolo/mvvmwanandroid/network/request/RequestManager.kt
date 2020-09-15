@@ -65,5 +65,11 @@ class RequestManager private constructor() {
         return NetworkApi.service.getProject(page,cid).apiData()
     }
 
+    /**
+     * 获取广场列表
+     */
+    suspend fun getPlaza(page: Int):PageData<Blog>{
+        return NetworkApi.service.getPlaza(page).apiData()
+    }
 
 }

@@ -16,6 +16,10 @@ import com.yolo.mvvmwanandroid.viewmodel.ProjectFragmentViewModel
  * @date 2020/9/10
  */
 class ProjectFragment: BaseFragment<ProjectFragmentViewModel, FragmentProjectBinding>() {
+
+    companion object{
+        val instance =  ProjectFragment()
+    }
     override val layoutId: Int
         get() = R.layout.fragment_project
 

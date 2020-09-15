@@ -50,18 +50,17 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
         mViewModel.getBanner()
 
         fragments = listOf(
-            HomeBlogFragment(), ProjectFragment(),HomeBlogFragment(),HomeBlogFragment()
+            HomeBlogFragment.instance, ProjectFragment.instance,PlazaFragment.instance
         )
 
         val tabTitle = listOf<String>(
             getString(R.string.tab_hot),
             getString(R.string.tab_project),
-            getString(R.string.tab_plaza),
-            getString(R.string.article)
+            getString(R.string.tab_plaza)
         )
 
-        mDataBinding.homeViewpager.adapter = object :FragmentStatePagerAdapter(childFragmentManager,
-            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        mDataBinding.homeViewpager.adapter = object :FragmentPagerAdapter(childFragmentManager,
+            BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         ){
             override fun getItem(position: Int): Fragment {
                 return fragments[position]
@@ -74,7 +73,13 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
             override fun getPageTitle(position: Int): CharSequence? {
                 return tabTitle[position]
             }
+
+            override fun getItemId(position: Int): Long {
+                return fragments[position].hashCode().toLong()
+            }
+
         }
+        mDataBinding.homeViewpager.offscreenPageLimit = fragments.size
 
         mDataBinding.homeTab.setupWithViewPager(mDataBinding.homeViewpager)
 
@@ -88,6 +93,5 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
     override fun onPause() {
         super.onPause()
         mDataBinding.homeBanner.stopAutoScroll()
-
     }
 }
