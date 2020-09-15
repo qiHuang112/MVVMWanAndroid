@@ -8,6 +8,7 @@
         <variable
             name="tag"
             type="com.yolo.mvvmwanandroid.network.bean.Tag" />
+        <import type="com.yolo.mvvmwanandroid.adapter.Converter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -91,7 +92,7 @@
             app:layout_constraintEnd_toStartOf="@+id/iv_pic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_author"
-            android:text="@{blog.title}" />
+            android:text="@{Converter.htmlToSpanned(blog.title)}" />
 
         <TextView
             android:id="@+id/tv_desc"
@@ -107,7 +108,7 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_title"
-            android:text="@{blog.desc}"/>
+            android:text="@{Converter.htmlToSpanned(blog.desc)}"/>
 
         <ImageView
             android:id="@+id/iv_pic"

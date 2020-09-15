@@ -50,13 +50,14 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
         mViewModel.getBanner()
 
         fragments = listOf(
-            HomeBlogFragment.instance, ProjectFragment.instance,PlazaFragment.instance
+            HomeBlogFragment.instance, ProjectFragment.instance,PlazaFragment.instance,AnswerFragment.instance
         )
 
         val tabTitle = listOf<String>(
             getString(R.string.tab_hot),
             getString(R.string.tab_project),
-            getString(R.string.tab_plaza)
+            getString(R.string.tab_plaza),
+            getString(R.string.tab_answer)
         )
 
         mDataBinding.homeViewpager.adapter = object :FragmentPagerAdapter(childFragmentManager,

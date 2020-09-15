@@ -72,4 +72,12 @@ class RequestManager private constructor() {
         return NetworkApi.service.getPlaza(page).apiData()
     }
 
+    /**
+     * 获取问答列表
+     */
+    suspend fun getAnswer(page: Int):PageData<Blog>{
+        return NetworkApi.service.getAnswer(page).apiData()
+    }
+
+
 }
