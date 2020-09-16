@@ -1,9 +1,11 @@
 package com.yolo.mvvmwanandroid.view.adapter
 
+import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.TitleItemBinding
+import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.network.bean.Category
 
 /**
@@ -30,4 +32,15 @@ class TitleAdapter:BaseQuickAdapter<Category,BaseDataBindingHolder<TitleItemBind
         checkedPosition = position
         notifyDataSetChanged()
     }
+}
+
+class TitleDiffCallBack: DiffUtil.ItemCallback<Category>(){
+    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+        return oldItem.id == newItem.id
+    }
+
 }

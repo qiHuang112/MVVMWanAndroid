@@ -33,9 +33,11 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
 
     val currentPosition : MutableLiveData<Int> = MutableLiveData()
 
+    val topCategory = Category(101,-1,"最新",0,0,false,0, ArrayList())
+
+
     fun getTitle(){
         refreshStatus.value = true
-        val topCategory = Category(101,-1,"最新",0,0,false,0, ArrayList())
         title.value = mutableListOf<Category>().apply {
             add(topCategory)
         }
@@ -70,6 +72,13 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
         launch(
             block = {
                 val category = title.value?:return@launch
+                if(category.size==1){
+                    val titleCategory =  projectRepository.getProjectTitle()
+                    title.value = mutableListOf<Category>().apply{
+                        add(topCategory)
+                        addAll(titleCategory)
+                    }
+                }
                 val cid = category[position].id
                 val project = if(cid == -1){
                     projectRepository.getTopProject(INITIAL_PAGE)

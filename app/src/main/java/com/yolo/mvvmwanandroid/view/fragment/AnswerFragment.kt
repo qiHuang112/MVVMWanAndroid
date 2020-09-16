@@ -5,6 +5,7 @@ import com.yolo.mvvm.fragment.BaseFragment
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentAnswerBinding
 import com.yolo.mvvmwanandroid.view.adapter.BlogAdapter
+import com.yolo.mvvmwanandroid.view.adapter.BlogDiffCallBack
 import com.yolo.mvvmwanandroid.view.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.viewmodel.AnswerFragmentViewModel
@@ -28,6 +29,8 @@ class AnswerFragment:BaseFragment<AnswerFragmentViewModel,FragmentAnswerBinding>
             loadMoreModule.setOnLoadMoreListener {
                 mViewModel.loadMoreAnswer()
             }
+            animationEnable = true
+            setDiffCallback(BlogDiffCallBack())
         }
         mDataBinding.adapter = adapter
         mDataBinding.srlAnswer.run {

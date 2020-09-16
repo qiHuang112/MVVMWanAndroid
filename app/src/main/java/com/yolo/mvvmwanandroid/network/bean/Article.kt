@@ -13,4 +13,7 @@ data class Article(
     var parentChapterId: Int = 0,
     var userControlSetTop: Boolean = false,
     var visible: Int = 0
-) : Parcelable
+) : Parcelable{
+
+    //TODO 与category 合并
+}

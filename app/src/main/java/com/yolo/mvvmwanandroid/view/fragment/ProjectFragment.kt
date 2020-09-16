@@ -7,6 +7,7 @@ import com.yolo.mvvmwanandroid.databinding.FragmentProjectBinding
 import com.yolo.mvvmwanandroid.view.adapter.BlogAdapter
 import com.yolo.mvvmwanandroid.view.adapter.BlogDiffCallBack
 import com.yolo.mvvmwanandroid.view.adapter.TitleAdapter
+import com.yolo.mvvmwanandroid.view.adapter.TitleDiffCallBack
 import com.yolo.mvvmwanandroid.view.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.viewmodel.ProjectFragmentViewModel
@@ -28,6 +29,7 @@ class ProjectFragment: BaseFragment<ProjectFragmentViewModel, FragmentProjectBin
             clickListener = {
                 mViewModel.refreshProject(it)
             }
+            setDiffCallback(TitleDiffCallBack())
         }
 
         val projectAdapter = BlogAdapter().apply {
@@ -38,7 +40,7 @@ class ProjectFragment: BaseFragment<ProjectFragmentViewModel, FragmentProjectBin
                 }
             }
             setDiffCallback(BlogDiffCallBack())
-
+            animationEnable = true
         }
 
         mDataBinding.apply {

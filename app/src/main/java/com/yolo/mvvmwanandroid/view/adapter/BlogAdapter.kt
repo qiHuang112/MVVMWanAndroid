@@ -1,12 +1,15 @@
 package com.yolo.mvvmwanandroid.view.adapter
 
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.BlogItemBinding
 import com.yolo.mvvmwanandroid.network.bean.Blog
+import java.util.logging.Logger
 
 /**
  * @author yolo.huang
@@ -16,14 +19,12 @@ class BlogAdapter:
     BaseQuickAdapter<Blog, BaseDataBindingHolder<BlogItemBinding>>(R.layout.blog_item),
     LoadMoreModule {
 
-
     override fun convert(holder: BaseDataBindingHolder<BlogItemBinding>, item: Blog) {
         holder.dataBinding?.blog = item
         if (!item.tags.isNullOrEmpty()) {
             holder.dataBinding?.tag = item.tags[0]
         }
         holder.dataBinding?.ivCollect?.isSelected = item.collect
-
     }
 
 

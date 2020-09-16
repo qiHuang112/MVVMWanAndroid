@@ -5,6 +5,7 @@ import com.yolo.mvvm.fragment.BaseFragment
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentPlazaBinding
 import com.yolo.mvvmwanandroid.view.adapter.BlogAdapter
+import com.yolo.mvvmwanandroid.view.adapter.BlogDiffCallBack
 import com.yolo.mvvmwanandroid.view.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.viewmodel.PlazaFragmentViewModel
@@ -23,12 +24,14 @@ class PlazaFragment :BaseFragment<PlazaFragmentViewModel,FragmentPlazaBinding>()
         get() = R.layout.fragment_plaza
 
     override fun initView() {
-        val adapter = BlogAdapter()
-        adapter.apply {
+        val adapter = BlogAdapter().apply {
             loadMoreModule.loadMoreView = CommonLoadMoreView()
             loadMoreModule.setOnLoadMoreListener {
                 mViewModel.loadMorePlaza()
             }
+            setDiffCallback(BlogDiffCallBack())
+            animationEnable = true
+
         }
         mDataBinding.adapter = adapter
 

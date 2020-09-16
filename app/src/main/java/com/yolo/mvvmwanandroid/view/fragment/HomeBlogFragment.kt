@@ -24,19 +24,24 @@ class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogB
         get() = R.layout.fragment_home_blog
 
     override fun initView() {
-        val adapter = BlogAdapter()
-
-        adapter.apply {
+        val adapter = BlogAdapter().apply {
             loadMoreModule.apply {
                 loadMoreView = CommonLoadMoreView()
                 setOnLoadMoreListener {
                     mViewModel.getMoreBlog()
                 }
             }
+            animationEnable = true
             setDiffCallback(BlogDiffCallBack())
         }
-
-        mDataBinding.rvHomeBlog.adapter = adapter
+        mDataBinding.srlBlog.run {
+            setColorSchemeResources(R.color.textColorPrimary)
+            setProgressBackgroundColorSchemeResource(R.color.bgColorPrimary)
+            setOnRefreshListener {
+                mViewModel.getBlog()
+            }
+        }
+        mDataBinding.adapter = adapter
         mViewModel.apply {
             blog.observe(viewLifecycleOwner,Observer{
                 adapter.setNewInstance(it)
@@ -52,21 +57,8 @@ class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogB
                     else -> return@Observer
                 }
             })
+            getBlog()
         }
-        mDataBinding.srlBlog.run {
-            setColorSchemeResources(R.color.textColorPrimary)
-            setProgressBackgroundColorSchemeResource(R.color.bgColorPrimary)
-            setOnRefreshListener {
-                mViewModel.getBlog()
-            }
-        }
-        getData()
-    }
-
-    private fun getData() {
-        mViewModel.getBlog()
 
     }
-
-
 }

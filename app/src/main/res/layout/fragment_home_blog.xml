@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="adapter"
+            type="com.yolo.mvvmwanandroid.view.adapter.BlogAdapter" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,6 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/rv_home_blog"
+            Adapter="@{adapter}"
+            tools:listitem="@layout/blog_item"
             android:background="@color/bgColorSecondary"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
