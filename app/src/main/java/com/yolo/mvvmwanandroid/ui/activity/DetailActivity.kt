@@ -17,6 +17,7 @@ import com.yolo.mvvmwanandroid.common.customJs
 import com.yolo.mvvmwanandroid.common.whiteHostList
 import com.yolo.mvvmwanandroid.databinding.ActivityDetailBinding
 import com.yolo.mvvmwanandroid.network.bean.Blog
+import com.yolo.mvvmwanandroid.ui.fragment.MoreFragment
 import com.yolo.mvvmwanandroid.viewmodel.DetailViewModel
 
 class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
@@ -47,7 +48,7 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
                 finish()
             }
             ivMore.setOnClickListener {
-
+                MoreFragment.instance(blog).show(supportFragmentManager)
             }
         }
 
@@ -109,18 +110,18 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
 
 
     override fun onPause() {
-        super.onPause()
         agentWeb.webLifeCycle.onPause()
+        super.onPause()
     }
 
     override fun onResume() {
-        super.onResume()
         agentWeb.webLifeCycle.onResume()
+        super.onResume()
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         agentWeb.webLifeCycle.onDestroy()
+        super.onDestroy()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -129,5 +130,9 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
         }else{
             super.onKeyDown(keyCode, event)
         }
+    }
+
+    fun refreshPage(){
+        agentWeb.urlLoader.reload()
     }
 }
