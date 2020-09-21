@@ -2,6 +2,7 @@ package com.yolo.mvvmwanandroid.view.fragment
 
 import androidx.lifecycle.Observer
 import com.yolo.mvvm.fragment.BaseFragment
+import com.yolo.mvvmwanandroid.DetailActivity
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentHomeBlogBinding
 import com.yolo.mvvmwanandroid.view.adapter.BlogAdapter
@@ -29,6 +30,9 @@ class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogB
                 loadMoreView = CommonLoadMoreView()
                 setOnLoadMoreListener {
                     mViewModel.getMoreBlog()
+                }
+                setOnItemClickListener { _, _, position ->
+                    DetailActivity.enterDetail(mActivity,data[position])
                 }
             }
             animationEnable = true

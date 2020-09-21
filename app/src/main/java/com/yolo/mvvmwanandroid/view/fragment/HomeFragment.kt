@@ -9,9 +9,11 @@ import com.yolo.mvvm.fragment.BaseFragment
 import com.yolo.mvvm.util.ImageOptions
 import com.yolo.mvvm.util.loadImage
 import com.yolo.mvvm.view.banner.BannerView
+import com.yolo.mvvmwanandroid.DetailActivity
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentHomeBinding
 import com.yolo.mvvmwanandroid.network.bean.BannerBean
+import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.viewmodel.HomeFragmentViewModel
 
 /**
@@ -31,7 +33,9 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
         mDataBinding.listener =
             object : BannerView.BannerItemOnClickListener {
                 override fun onItemClick(item: BannerView.BannerItemData) {
-
+                    if(item is BannerBean){
+                        DetailActivity.enterDetail(mActivity,Blog(title = item.title,link = item.url))
+                    }
                 }
 
                 override fun onShowItemView(imageView: ImageView, imageUrl: String) {

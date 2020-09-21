@@ -2,6 +2,7 @@ package com.yolo.mvvmwanandroid.view.fragment
 
 import androidx.lifecycle.Observer
 import com.yolo.mvvm.fragment.BaseFragment
+import com.yolo.mvvmwanandroid.DetailActivity
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentAnswerBinding
 import com.yolo.mvvmwanandroid.view.adapter.BlogAdapter
@@ -28,6 +29,9 @@ class AnswerFragment:BaseFragment<AnswerFragmentViewModel,FragmentAnswerBinding>
             loadMoreModule.loadMoreView = CommonLoadMoreView()
             loadMoreModule.setOnLoadMoreListener {
                 mViewModel.loadMoreAnswer()
+            }
+            setOnItemClickListener { _, _, position ->
+                DetailActivity.enterDetail(mActivity,data[position])
             }
             animationEnable = true
             setDiffCallback(BlogDiffCallBack())
