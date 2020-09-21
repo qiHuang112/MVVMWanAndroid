@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.view.loadmore
+package com.yolo.mvvmwanandroid.ui.loadmore
 
 import android.view.LayoutInflater
 import android.view.View

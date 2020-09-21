@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.view.fragment
+package com.yolo.mvvmwanandroid.ui.fragment
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager

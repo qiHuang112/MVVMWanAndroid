@@ -5,11 +5,11 @@
     <data>
         <variable
             name="adapter"
-            type="com.yolo.mvvmwanandroid.view.adapter.BlogAdapter" />
+            type="com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter" />
 
         <variable
             name="titleAdapter"
-            type="com.yolo.mvvmwanandroid.view.adapter.TitleAdapter" />
+            type="com.yolo.mvvmwanandroid.ui.adapter.TitleAdapter" />
     </data>
     
     <androidx.constraintlayout.widget.ConstraintLayout

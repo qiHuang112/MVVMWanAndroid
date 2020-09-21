@@ -6,7 +6,7 @@
     <data>
         <variable
             name="adapter"
-            type="com.yolo.mvvmwanandroid.view.adapter.BlogAdapter" />
+            type="com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

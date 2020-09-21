@@ -1,16 +1,15 @@
-package com.yolo.mvvmwanandroid
+package com.yolo.mvvmwanandroid.ui.activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.yolo.mvvm.activity.BaseActivity
 import com.yolo.mvvm.util.showToast
+import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.ActivityMainBinding
-import com.yolo.mvvmwanandroid.view.fragment.ArticleFragment
-import com.yolo.mvvmwanandroid.view.fragment.HomeFragment
-import com.yolo.mvvmwanandroid.view.fragment.MeFragment
-import com.yolo.mvvmwanandroid.view.fragment.TreeFragment
+import com.yolo.mvvmwanandroid.ui.fragment.ArticleFragment
+import com.yolo.mvvmwanandroid.ui.fragment.HomeFragment
+import com.yolo.mvvmwanandroid.ui.fragment.MeFragment
+import com.yolo.mvvmwanandroid.ui.fragment.TreeFragment
 import com.yolo.mvvmwanandroid.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 

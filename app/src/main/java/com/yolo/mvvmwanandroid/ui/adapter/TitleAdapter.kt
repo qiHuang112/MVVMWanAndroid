@@ -1,11 +1,10 @@
-package com.yolo.mvvmwanandroid.view.adapter
+package com.yolo.mvvmwanandroid.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.TitleItemBinding
-import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.network.bean.Category
 
 /**

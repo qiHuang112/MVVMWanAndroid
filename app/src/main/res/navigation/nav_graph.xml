@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.yolo.mvvmwanandroid.view.fragment.HomeFragment"
+        android:name="com.yolo.mvvmwanandroid.ui.fragment.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_article"
-        android:name="com.yolo.mvvmwanandroid.view.fragment.ArticleFragment"
+        android:name="com.yolo.mvvmwanandroid.ui.fragment.ArticleFragment"
         android:label="Article"
         tools:layout="@layout/fragment_article" />
 
     <fragment
         android:id="@+id/nav_tree"
-        android:name="com.yolo.mvvmwanandroid.view.fragment.TreeFragment"
+        android:name="com.yolo.mvvmwanandroid.ui.fragment.TreeFragment"
         android:label="Tree"
         tools:layout="@layout/fragment_tree" />
 
     <fragment
         android:id="@+id/nav_me"
-        android:name="com.yolo.mvvmwanandroid.view.fragment.MeFragment"
+        android:name="com.yolo.mvvmwanandroid.ui.fragment.MeFragment"
         android:label="Me"
         tools:layout="@layout/fragment_me" />
 

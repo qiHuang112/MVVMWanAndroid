@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.view.fragment
+package com.yolo.mvvmwanandroid.ui.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer

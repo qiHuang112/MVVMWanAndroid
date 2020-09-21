@@ -1,14 +1,14 @@
-package com.yolo.mvvmwanandroid.view.fragment
+package com.yolo.mvvmwanandroid.ui.fragment
 
 import androidx.lifecycle.Observer
 import com.yolo.mvvm.fragment.BaseFragment
-import com.yolo.mvvmwanandroid.DetailActivity
+import com.yolo.mvvmwanandroid.ui.activity.DetailActivity
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentPlazaBinding
-import com.yolo.mvvmwanandroid.view.adapter.BlogAdapter
-import com.yolo.mvvmwanandroid.view.adapter.BlogDiffCallBack
-import com.yolo.mvvmwanandroid.view.loadmore.CommonLoadMoreView
-import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
+import com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter
+import com.yolo.mvvmwanandroid.ui.adapter.BlogDiffCallBack
+import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
+import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.viewmodel.PlazaFragmentViewModel
 
 /**

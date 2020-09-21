@@ -6,7 +6,7 @@ import com.yolo.mvvm.viewmodel.BaseViewModel
 import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.network.bean.Category
 import com.yolo.mvvmwanandroid.repository.ProjectRepository
-import com.yolo.mvvmwanandroid.view.loadmore.LoadMoreStatus
+import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 
 /**
  * @author yolo.huang

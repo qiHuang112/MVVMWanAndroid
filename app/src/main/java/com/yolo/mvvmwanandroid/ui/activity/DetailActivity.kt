@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid
+package com.yolo.mvvmwanandroid.ui.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -12,6 +12,7 @@ import com.just.agentweb.DefaultWebClient
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
 import com.yolo.mvvm.activity.BaseActivity
+import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.common.customJs
 import com.yolo.mvvmwanandroid.common.whiteHostList
 import com.yolo.mvvmwanandroid.databinding.ActivityDetailBinding
@@ -24,7 +25,8 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
     companion object {
         const val PARAM_BLOG = "param_blog"
         fun enterDetail(activity: Activity,blog: Blog?){
-            val intent = Intent(activity,DetailActivity::class.java)
+            val intent = Intent(activity,
+                DetailActivity::class.java)
             intent.putExtra(PARAM_BLOG,blog)
             activity.startActivity(intent)
         }
@@ -58,7 +60,10 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
             .setAgentWebParent(mDataBinding.flDetail, ViewGroup.LayoutParams(-1,-1))
             .useDefaultIndicator(getColor(R.color.textColorPrimary), 2)
             .interceptUnkownUrl()
-            .setMainFrameErrorView(R.layout.item_reload,R.id.button_reload)
+            .setMainFrameErrorView(
+                R.layout.item_reload,
+                R.id.button_reload
+            )
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
             .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.DISALLOW)
             .setWebChromeClient(object:WebChromeClient(){

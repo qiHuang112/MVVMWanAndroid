@@ -1,4 +1,4 @@
-package com.yolo.mvvmwanandroid.view.fragment
+package com.yolo.mvvmwanandroid.ui.fragment
 
 import com.yolo.mvvm.fragment.BaseFragment
 import com.yolo.mvvmwanandroid.R
