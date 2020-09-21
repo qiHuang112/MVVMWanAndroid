@@ -10,25 +10,25 @@ interface ApiService {
     }
 
     @GET("wxarticle/chapters/json")
-    suspend fun getArticleTitles(): ApiResponse<List<Article>>
+    suspend fun getWeChatTitle(): ApiResponse<MutableList<Category>>
 
     @GET("wxarticle/list/{id}/{page}/json")
-    suspend fun getArticleContents(
+    suspend fun getWeChatBlog(
         @Path("page") page: Int,
         @Path("id") id: Int
-    ): ApiResponse<PageData<ArticleContent>>
+    ): ApiResponse<PageData<Blog>>
 
     @GET("banner/json")
-    suspend fun getBanner():ApiResponse<List<BannerBean>>
+    suspend fun getBanner():ApiResponse<MutableList<BannerBean>>
 
     @GET("article/list/{page}/json")
     suspend fun getBlog(@Path("page") page: Int):ApiResponse<PageData<Blog>>
 
     @GET("article/top/json")
-    suspend fun getTopBlog():ApiResponse<List<Blog>>
+    suspend fun getTopBlog():ApiResponse<MutableList<Blog>>
 
     @GET("project/tree/json")
-    suspend fun getProjectTitle():ApiResponse<List<Category>>
+    suspend fun getProjectTitle():ApiResponse<MutableList<Category>>
 
     @GET("article/listproject/{page}/json")
     suspend fun getTopProject(@Path("page")page: Int):ApiResponse<PageData<Blog>>

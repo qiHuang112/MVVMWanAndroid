@@ -6,13 +6,12 @@ import com.yolo.mvvm.activity.BaseActivity
 import com.yolo.mvvm.util.showToast
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.ActivityMainBinding
-import com.yolo.mvvmwanandroid.ui.fragment.ArticleFragment
 import com.yolo.mvvmwanandroid.ui.fragment.HomeFragment
 import com.yolo.mvvmwanandroid.ui.fragment.MeFragment
 import com.yolo.mvvmwanandroid.ui.fragment.TreeFragment
+import com.yolo.mvvmwanandroid.ui.fragment.WeChatFragment
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.MainActivityViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 项目为单Activity多Fragment模式
@@ -30,7 +29,7 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
 
         fragments = mapOf(
             R.id.nav_home to HomeFragment.instance,
-            R.id.nav_article to ArticleFragment.instance,
+            R.id.nav_article to WeChatFragment.instance,
             R.id.nav_tree to TreeFragment.instance,
             R.id.nav_me to MeFragment.instance
         )

@@ -12,21 +12,21 @@ class RequestManager private constructor() {
     /**
      * 获取微信公众号列表
      */
-    suspend fun getArticleTitles(): List<Article> {
-        return NetworkApi.service.getArticleTitles().apiData()
+    suspend fun getWeChatTitle(): MutableList<Category> {
+        return NetworkApi.service.getWeChatTitle().apiData()
     }
 
     /**
      * 获取微信公众号列表
      */
-    suspend fun getArticleContents(page: Int, id: Int = 0): PageData<ArticleContent> {
-        return NetworkApi.service.getArticleContents(page, id).apiData()
+    suspend fun getWeChatBlog(page: Int, id: Int = 0): PageData<Blog> {
+        return NetworkApi.service.getWeChatBlog(page, id).apiData()
     }
 
     /**
      * 获取banner
      */
-    suspend fun getBanner():List<BannerBean>{
+    suspend fun getBanner():MutableList<BannerBean>{
         return NetworkApi.service.getBanner().apiData()
     }
 
@@ -40,14 +40,14 @@ class RequestManager private constructor() {
     /**
      * 获取置顶博客
      */
-    suspend fun getTopBlog():List<Blog>{
+    suspend fun getTopBlog():MutableList<Blog>{
         return NetworkApi.service.getTopBlog().apiData()
     }
 
     /**
      * 获取项目分类
      */
-    suspend fun getProjectTitle():List<Category>{
+    suspend fun getProjectTitle():MutableList<Category>{
         return NetworkApi.service.getProjectTitle().apiData()
     }
 
