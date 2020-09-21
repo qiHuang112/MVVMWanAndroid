@@ -9,13 +9,14 @@ import com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter
 import com.yolo.mvvmwanandroid.ui.adapter.BlogDiffCallBack
 import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
+import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.HomeBlogFragmentViewModel
 
 /**
  * @author yolo.huang
  * @date 2020/7/2
  */
-class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogBinding>() {
+class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogBinding>(),ScrollToTop {
 
     companion object{
         val instance =  HomeBlogFragment()
@@ -63,6 +64,11 @@ class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogB
             })
             getBlog()
         }
+
+    }
+
+    override fun scrollToTop() {
+        mDataBinding.rvHomeBlog.smoothScrollToPosition(0)
 
     }
 }

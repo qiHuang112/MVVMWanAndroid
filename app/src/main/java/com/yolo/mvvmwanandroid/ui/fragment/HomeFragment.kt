@@ -13,12 +13,13 @@ import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentHomeBinding
 import com.yolo.mvvmwanandroid.network.bean.BannerBean
 import com.yolo.mvvmwanandroid.network.bean.Blog
+import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.HomeFragmentViewModel
 
 /**
  * 首页
  */
-class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>(),ScrollToTop {
 
     private lateinit var fragments:List<Fragment>
 
@@ -97,5 +98,13 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>() 
     override fun onPause() {
         super.onPause()
         mDataBinding.homeBanner.stopAutoScroll()
+    }
+
+    override fun scrollToTop() {
+        if (!this::fragments.isInitialized) return
+        val currentFragment = fragments[mDataBinding.homeViewpager.currentItem]
+        if (currentFragment is ScrollToTop && currentFragment.isVisible) {
+            currentFragment.scrollToTop()
+        }
     }
 }

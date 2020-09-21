@@ -10,6 +10,7 @@ import com.yolo.mvvmwanandroid.ui.fragment.ArticleFragment
 import com.yolo.mvvmwanandroid.ui.fragment.HomeFragment
 import com.yolo.mvvmwanandroid.ui.fragment.MeFragment
 import com.yolo.mvvmwanandroid.ui.fragment.TreeFragment
+import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -34,15 +35,21 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
             R.id.nav_me to MeFragment.instance
         )
 
-        nav_view.setOnNavigationItemSelectedListener {
+        mDataBinding.navView.setOnNavigationItemSelectedListener {
             showFragment(id = it.itemId)
             true
+        }
+        mDataBinding.navView.setOnNavigationItemReselectedListener {
+            val fragment = fragments[it.itemId]
+            if (fragment is ScrollToTop) {
+                fragment.scrollToTop()
+            }
         }
 
         if(savedInstanceState==null){
             val firstId  = R.id.nav_home
-            nav_view.selectedItemId = firstId
-            //showFragment(firstId)
+            mDataBinding.navView.selectedItemId = firstId
+            showFragment(firstId)
         }
     }
 

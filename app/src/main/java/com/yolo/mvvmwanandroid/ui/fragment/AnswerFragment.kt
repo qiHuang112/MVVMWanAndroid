@@ -9,13 +9,14 @@ import com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter
 import com.yolo.mvvmwanandroid.ui.adapter.BlogDiffCallBack
 import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
+import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.AnswerFragmentViewModel
 
 /**
  * @author yolo.huang
  * @date 2020/9/15
  */
-class AnswerFragment:BaseFragment<AnswerFragmentViewModel,FragmentAnswerBinding>() {
+class AnswerFragment:BaseFragment<AnswerFragmentViewModel,FragmentAnswerBinding>(),ScrollToTop {
 
     companion object{
         val instance = AnswerFragment()
@@ -64,5 +65,9 @@ class AnswerFragment:BaseFragment<AnswerFragmentViewModel,FragmentAnswerBinding>
 
             getAnswer()
         }
+    }
+
+    override fun scrollToTop() {
+        mDataBinding.rvAnswer.smoothScrollToPosition(0)
     }
 }

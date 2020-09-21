@@ -11,13 +11,14 @@ import com.yolo.mvvmwanandroid.ui.adapter.TitleAdapter
 import com.yolo.mvvmwanandroid.ui.adapter.TitleDiffCallBack
 import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
+import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.ProjectFragmentViewModel
 
 /**
  * @author yolo.huang
  * @date 2020/9/10
  */
-class ProjectFragment: BaseFragment<ProjectFragmentViewModel, FragmentProjectBinding>() {
+class ProjectFragment: BaseFragment<ProjectFragmentViewModel, FragmentProjectBinding>(),ScrollToTop {
 
     companion object{
         val instance =  ProjectFragment()
@@ -83,5 +84,9 @@ class ProjectFragment: BaseFragment<ProjectFragmentViewModel, FragmentProjectBin
             getTitle()
         }
 
+    }
+
+    override fun scrollToTop() {
+        mDataBinding.rvProject.smoothScrollToPosition(0)
     }
 }

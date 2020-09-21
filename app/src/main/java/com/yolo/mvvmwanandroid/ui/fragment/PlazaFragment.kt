@@ -9,13 +9,14 @@ import com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter
 import com.yolo.mvvmwanandroid.ui.adapter.BlogDiffCallBack
 import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
+import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.PlazaFragmentViewModel
 
 /**
  * @author yolo.huang
  * @date 2020/9/15
  */
-class PlazaFragment :BaseFragment<PlazaFragmentViewModel,FragmentPlazaBinding>(){
+class PlazaFragment :BaseFragment<PlazaFragmentViewModel,FragmentPlazaBinding>(),ScrollToTop{
 
     companion object{
         val instance =  PlazaFragment()
@@ -66,5 +67,9 @@ class PlazaFragment :BaseFragment<PlazaFragmentViewModel,FragmentPlazaBinding>()
 
             getPlaza()
         }
+    }
+
+    override fun scrollToTop() {
+        mDataBinding.rvPlaza.smoothScrollToPosition(0)
     }
 }
