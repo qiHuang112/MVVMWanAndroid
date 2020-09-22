@@ -16,7 +16,7 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
 
 
     companion object{
-        const val INITIAL_PAGE = 0
+        const val INITIAL_PAGE = 1
         const val INITIAL_POSITION = 0
 
     }
@@ -105,9 +105,9 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
                 val cid = category[position].id
 
                 val project = if(cid == -1){
-                    projectRepository.getTopProject(page)
+                    projectRepository.getTopProject(page+1)
                 }else{
-                    projectRepository.getProject(page,cid)
+                    projectRepository.getProject(page+1,cid)
                 }
                 projects.value?.addAll(project.datas)
                 page = project.curPage

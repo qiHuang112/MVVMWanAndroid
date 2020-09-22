@@ -48,7 +48,7 @@ class PlazaFragmentViewModel(application: Application):BaseViewModel(application
         loadMoreStatus.value = LoadMoreStatus.LOADING
         launch(
             block = {
-                val blogMore = plazaRepository.getPlaza(page)
+                val blogMore = plazaRepository.getPlaza(page+1)
                 val currentBlog = plaza.value?: mutableListOf()
                 currentBlog.addAll(blogMore.datas)
                 plaza.value = currentBlog

@@ -47,7 +47,7 @@ class AnswerFragmentViewModel(application: Application):BaseViewModel(applicatio
         loadMoreStatus.value = LoadMoreStatus.LOADING
         launch(
             block = {
-                val blogMore = answerRepository.getAnswer(page)
+                val blogMore = answerRepository.getAnswer(page+1)
                 val currentBlog = answer.value?: mutableListOf()
                 currentBlog.addAll(blogMore.datas)
                 answer.value = currentBlog

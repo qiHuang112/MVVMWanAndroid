@@ -11,8 +11,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 class WeChatBlogViewModel(application: Application) : BaseViewModel(application) {
 
     companion object {
-        const val INITIAL_PAGE = 0
-        const val INITIAL_POSITION = 0
+        const val INITIAL_PAGE = 1
     }
 
     private val weChatRepository by lazy {
@@ -52,7 +51,7 @@ class WeChatBlogViewModel(application: Application) : BaseViewModel(application)
             block = {
                 val cid = category.id
 
-                val project = weChatRepository.getWeChatBlog(page, cid)
+                val project = weChatRepository.getWeChatBlog(page+1, cid)
                 blog.value?.addAll(project.datas)
                 page = project.curPage
                 loadMoreStatus.value = if (project.offset >= project.total) {

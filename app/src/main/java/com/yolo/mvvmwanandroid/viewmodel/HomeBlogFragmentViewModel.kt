@@ -61,7 +61,7 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
     fun getMoreBlog(){
         launch(
             block = {
-                val moreBlog = blogRepository.getBlog(page)
+                val moreBlog = blogRepository.getBlog(page+1)
                 val collectionsList = blog.value ?: mutableListOf()
                 page = moreBlog.curPage
                 collectionsList.addAll(moreBlog.datas)
