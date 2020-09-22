@@ -1,9 +1,12 @@
 package com.yolo.mvvmwanandroid.ui.fragment
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
 import com.yolo.mvvm.fragment.BaseFragment
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentWechatBinding
+import com.yolo.mvvmwanandroid.network.bean.Category
 import com.yolo.mvvmwanandroid.ui.activity.DetailActivity
 import com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter
 import com.yolo.mvvmwanandroid.ui.adapter.BlogDiffCallBack
@@ -18,67 +21,56 @@ import com.yolo.mvvmwanandroid.viewmodel.WeChatFragmentViewModel
  * 公众号
  * @author qiHuang112
  */
-class WeChatFragment : BaseFragment<WeChatFragmentViewModel, FragmentWechatBinding>(),ScrollToTop {
+class WeChatFragment : BaseFragment<WeChatFragmentViewModel, FragmentWechatBinding>(), ScrollToTop {
 
-    companion object{
+    companion object {
         val instance = WeChatFragment()
     }
+
+    val fragments = mutableListOf<WeChatBlogFragment>()
+    private val titles = mutableListOf<String>()
 
     override val layoutId = R.layout.fragment_wechat
 
     override fun initView() {
-        val titleAdapter = TitleAdapter().apply {
-            clickListener = {
-                mViewModel.refreshWeChatList(it)
-            }
-            setDiffCallback(TitleDiffCallBack())
-        }
 
-        val projectAdapter = BlogAdapter().apply {
-            loadMoreModule.apply {
-                loadMoreView = CommonLoadMoreView()
-                setOnLoadMoreListener {
-                    mViewModel.loadMoreList()
-                }
-            }
-            setOnItemClickListener { _, _, position ->
-                DetailActivity.enterDetail(mActivity,data[position])
-            }
-            setDiffCallback(BlogDiffCallBack())
-            animationEnable = true
-        }
 
-        mDataBinding.apply {
-            this.titleAdapter = titleAdapter
-            this.adapter = projectAdapter
-            srlWeChat.apply {
-                setColorSchemeResources(R.color.textColorPrimary)
-                setProgressBackgroundColorSchemeResource(R.color.bgColorPrimary)
-                setOnRefreshListener {
-                    mViewModel.refreshWeChatList()
-                }
-            }
-        }
+
+
         mViewModel.apply {
-            title.observe(viewLifecycleOwner, Observer {
-                titleAdapter.setNewInstance(it)
-            })
-            blog.observe(viewLifecycleOwner, Observer {
-                projectAdapter.setNewInstance(it)
-            })
-            currentPosition.observe(viewLifecycleOwner, Observer {
-                titleAdapter.checked(position = it)
-            })
-            refreshStatus.observe(viewLifecycleOwner, Observer {
-                mDataBinding.srlWeChat.isRefreshing = it
-            })
-            loadMoreStatus.observe(viewLifecycleOwner, Observer {
-                when(it){
-                    LoadMoreStatus.ERROR -> projectAdapter.loadMoreModule.loadMoreFail()
-                    LoadMoreStatus.END -> projectAdapter.loadMoreModule.loadMoreEnd()
-                    LoadMoreStatus.COMPLETED ->projectAdapter.loadMoreModule.loadMoreComplete()
-                    else -> return@Observer
+            title.observe(viewLifecycleOwner, Observer { mutableList ->
+                mutableList.forEach {
+                    titles.add(it.name)
+                    fragments.add(WeChatBlogFragment.newInstance(it))
                 }
+
+                mDataBinding.vpWechat.adapter = object : FragmentPagerAdapter(
+                    childFragmentManager,
+                    BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+                ) {
+                    override fun getItem(position: Int): Fragment {
+                        return fragments[position]
+                    }
+
+                    override fun getCount(): Int {
+                        return fragments.size
+                    }
+
+                    override fun getPageTitle(position: Int): CharSequence? {
+                        return titles[position]
+                    }
+
+                    override fun getItemId(position: Int): Long {
+                        return fragments[position].hashCode().toLong()
+                    }
+
+                }
+
+                mDataBinding.vpWechat.offscreenPageLimit = fragments.size
+
+                mDataBinding.tabWeChat.setupWithViewPager(mDataBinding.vpWechat)
+
+
             })
 
             getTitle()
@@ -87,6 +79,7 @@ class WeChatFragment : BaseFragment<WeChatFragmentViewModel, FragmentWechatBindi
     }
 
     override fun scrollToTop() {
-        mDataBinding.rvWeChat.smoothScrollToPosition(0)
+        if (fragments.isEmpty()) return
+        fragments[mDataBinding.vpWechat.currentItem].scrollToTop()
     }
 }
