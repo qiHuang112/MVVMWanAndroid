@@ -4,24 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="adapter"
             type="com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.yolo.mvvmwanandroid.viewmodel.BaseBlogViewModel" />
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/srl_blog">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.yolo.mvvmwanandroid.ui.widget.BaseSwipeRefreshLayout
+            android:id="@+id/srl_blog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rv_home_blog"
-            Adapter="@{adapter}"
-            tools:listitem="@layout/blog_item"
-            android:background="@color/bgColorSecondary"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            isRefreshing="@{viewModel.refreshStatus}"
+            visibility="@{!viewModel.reloadStatus}">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_home_blog"
+                setAdapter="@{adapter}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bgColorSecondary"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/blog_item" />
+
+        </com.yolo.mvvmwanandroid.ui.widget.BaseSwipeRefreshLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            visibility="@{viewModel.reloadStatus}">
+            <include layout="@layout/item_reload"
+                android:id="@+id/reloadView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

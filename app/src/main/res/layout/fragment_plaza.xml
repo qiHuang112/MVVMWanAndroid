@@ -7,6 +7,10 @@
         <variable
             name="adapter"
             type="com.yolo.mvvmwanandroid.ui.adapter.BlogAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.yolo.mvvmwanandroid.viewmodel.BaseBlogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,22 +18,32 @@
         android:layout_height="match_parent">
 
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <com.yolo.mvvmwanandroid.ui.widget.BaseSwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:id="@+id/srl_plaza"
-            android:background="@color/bgColorSecondary"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            isRefreshing="@{viewModel.refreshStatus}"
+            visibility="@{!viewModel.reloadStatus}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/rv_plaza"
-                Adapter="@{adapter}"
+                setAdapter="@{adapter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/blog_item"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </com.yolo.mvvmwanandroid.ui.widget.BaseSwipeRefreshLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            visibility="@{viewModel.reloadStatus}">
+            <include layout="@layout/item_reload"
+                android:id="@+id/reloadView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

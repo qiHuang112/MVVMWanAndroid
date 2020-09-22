@@ -16,6 +16,10 @@ class TitleAdapter:BaseQuickAdapter<Category,BaseDataBindingHolder<TitleItemBind
 
     var clickListener:((position:Int) ->Unit)? =null
 
+    init {
+        setDiffCallback(TitleDiffCallBack())
+    }
+
     override fun convert(holder: BaseDataBindingHolder<TitleItemBinding>, item: Category) {
         holder.dataBinding?.apply {
             title = item.name

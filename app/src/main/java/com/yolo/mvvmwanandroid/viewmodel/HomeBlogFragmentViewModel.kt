@@ -12,7 +12,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
  * @date 2020/7/2
  * [com.yolo.mvvmwanandroid.fragment.HomeBlogFragment]
  */
-class HomeBlogFragmentViewModel(application: Application):BaseViewModel(application){
+class HomeBlogFragmentViewModel(application: Application):BaseBlogViewModel(application){
 
 
     companion object{
@@ -22,12 +22,10 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
     private val blogRepository by lazy { BlogRepository() }
 
     val blog : MutableLiveData<MutableList<Blog>> = MutableLiveData()
-    val refreshStatus:MutableLiveData<Boolean> = MutableLiveData()
-    val loadMoreStatus:MutableLiveData<LoadMoreStatus> = MutableLiveData()
     var page = INITIAL_PAGE
 
     fun getBlog(){
-        refreshStatus.value = true
+        refreshStatus.set(true)
         launch(
             block = {
                 val topDeferred = async {
@@ -50,10 +48,12 @@ class HomeBlogFragmentViewModel(application: Application):BaseViewModel(applicat
                     addAll(blogs.datas)
                 }
 
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(false)
             },
             error = {
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(true)
             }
         )
     }

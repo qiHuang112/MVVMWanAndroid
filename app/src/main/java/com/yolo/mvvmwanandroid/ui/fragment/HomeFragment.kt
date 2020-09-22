@@ -15,6 +15,7 @@ import com.yolo.mvvmwanandroid.network.bean.BannerBean
 import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.HomeFragmentViewModel
+import kotlinx.android.synthetic.main.item_reload.view.*
 
 /**
  * 首页
@@ -30,31 +31,40 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>(),
     }
 
     override fun initView() {
-        mDataBinding.listener =
-            object : BannerView.BannerItemOnClickListener {
-                override fun onItemClick(item: BannerView.BannerItemData) {
-                    if(item is BannerBean){
-                        DetailActivity.enterDetail(mActivity,Blog(title = item.title,link = item.url))
+        mDataBinding.apply {
+            listener =
+                object : BannerView.BannerItemOnClickListener {
+                    override fun onItemClick(item: BannerView.BannerItemData) {
+                        if(item is BannerBean){
+                            DetailActivity.enterDetail(mActivity,Blog(title = item.title,link = item.url))
+                        }
+                    }
+
+                    override fun onShowItemView(imageView: ImageView, imageUrl: String) {
+                        imageView.loadImage(
+                            fragment = this@HomeFragment,
+                            url = imageUrl,
+                            imageOptions = ImageOptions().apply {
+                                placeholder = R.drawable.shape_bg_image_default
+                            })
                     }
                 }
-
-                override fun onShowItemView(imageView: ImageView, imageUrl: String) {
-                    imageView.loadImage(
-                        fragment = this@HomeFragment,
-                        url = imageUrl,
-                        imageOptions = ImageOptions().apply {
-                            placeholder = R.drawable.shape_bg_image_default
-                        })
-                }
+            viewModel = mViewModel
+            reloadView.button_reload.setOnClickListener {
+                getData()
             }
+        }
+        initFragment()
+    }
 
-        mViewModel.banner.observe(this,
-            Observer<List<BannerBean>> { t -> mDataBinding.homeBanner.setData(t) })
-
+    override fun getData() {
         mViewModel.getBanner()
+    }
+
+    private fun initFragment() {
 
         fragments = listOf(
-            HomeBlogFragment.instance, ProjectFragment.instance,PlazaFragment.instance,AnswerFragment.instance
+            HomeBlogFragment(), ProjectFragment(),PlazaFragment(),AnswerFragment()
         )
 
         val tabTitle = listOf<String>(
@@ -107,4 +117,6 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>(),
             currentFragment.scrollToTop()
         }
     }
+
+
 }

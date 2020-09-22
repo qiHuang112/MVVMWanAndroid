@@ -12,7 +12,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
  * @author yolo.huang
  * @date 2020/9/14
  */
-class ProjectFragmentViewModel(application: Application):BaseViewModel(application) {
+class ProjectFragmentViewModel(application: Application):BaseBlogViewModel(application) {
 
 
     companion object{
@@ -23,8 +23,6 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
     
     private val projectRepository by lazy { ProjectRepository() }
     
-    val refreshStatus:MutableLiveData<Boolean> = MutableLiveData()
-    val loadMoreStatus:MutableLiveData<LoadMoreStatus> = MutableLiveData()
 
     val title: MutableLiveData<MutableList<Category>> = MutableLiveData()
     val projects:MutableLiveData<MutableList<Blog>> = MutableLiveData()
@@ -33,15 +31,11 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
 
     val currentPosition : MutableLiveData<Int> = MutableLiveData()
 
-    val topCategory = Category(101,-1,"最新",0,0,false,0, ArrayList())
+    private val topCategory = Category(101,-1,"最新",0,0,false,0, ArrayList())
 
 
     fun getTitle(){
-        refreshStatus.value = true
-        title.value = mutableListOf<Category>().apply {
-            add(topCategory)
-        }
-
+        refreshStatus.set(true)
         launch(
             block = {
                 val topProjects = projectRepository.getTopProject(INITIAL_PAGE)
@@ -49,21 +43,26 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
                 val titleCategory = projectRepository.getProjectTitle()
 
                 currentPosition.value = INITIAL_POSITION
-                title.value?.addAll(titleCategory)
+                title.value = mutableListOf<Category>().apply {
+                    add(topCategory)
+                    addAll(titleCategory)
+                }
                 projects.value = mutableListOf<Blog>().apply {
                     addAll(topProjects.datas)
                 }
                 page = topProjects.curPage
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(false)
             },
             error = {
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(true)
             }
         )
     }
 
     fun refreshProject(position:Int = currentPosition.value?: INITIAL_POSITION){
-        refreshStatus.value = true
+        refreshStatus.set(true)
         if(position !=currentPosition.value){
             projects.value = mutableListOf()
             currentPosition.value = position
@@ -88,10 +87,12 @@ class ProjectFragmentViewModel(application: Application):BaseViewModel(applicati
                 projects.value = project.datas.toMutableList()
                 page = project.curPage
 
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(false)
             },
             error = {
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(true)
 
             }
         )

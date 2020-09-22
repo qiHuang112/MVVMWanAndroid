@@ -11,7 +11,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 /**
  * [com.yolo.mvvmwanandroid.fragment.ArticleFragment]
  */
-class WeChatFragmentViewModel(application: Application) : BaseViewModel(application) {
+class WeChatFragmentViewModel(application: Application) : BaseBlogViewModel(application) {
     companion object {
         const val INITIAL_PAGE = 0
     }
@@ -26,8 +26,10 @@ class WeChatFragmentViewModel(application: Application) : BaseViewModel(applicat
             block = {
                 val titleCategory = weChatRepository.getWeChatTitle()
                 title.value = titleCategory
+                reloadStatus.set(false)
             },
             error = {
+                reloadStatus.set(true)
             }
         )
     }

@@ -1,5 +1,6 @@
 package com.yolo.mvvmwanandroid.ui.adapter
 
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.LoadMoreModule
@@ -7,6 +8,8 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.BlogItemBinding
 import com.yolo.mvvmwanandroid.network.bean.Blog
+import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
+import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 
 /**
  * @author yolo.huang
@@ -14,7 +17,13 @@ import com.yolo.mvvmwanandroid.network.bean.Blog
  */
 class BlogAdapter:
     BaseQuickAdapter<Blog, BaseDataBindingHolder<BlogItemBinding>>(R.layout.blog_item),
-    LoadMoreModule {
+    LoadMoreModule,Observer<LoadMoreStatus> {
+
+    init {
+        loadMoreModule.loadMoreView = CommonLoadMoreView()
+        setDiffCallback(BlogDiffCallBack())
+        animationEnable = true
+    }
 
     override fun convert(holder: BaseDataBindingHolder<BlogItemBinding>, item: Blog) {
         holder.dataBinding?.blog = item
@@ -22,6 +31,15 @@ class BlogAdapter:
             holder.dataBinding?.tag = item.tags[0]
         }
         holder.dataBinding?.ivCollect?.isSelected = item.collect
+    }
+
+    override fun onChanged(it: LoadMoreStatus?) {
+        when(it){
+            LoadMoreStatus.ERROR -> loadMoreModule.loadMoreFail()
+            LoadMoreStatus.END -> loadMoreModule.loadMoreEnd()
+            LoadMoreStatus.COMPLETED ->loadMoreModule.loadMoreComplete()
+            else -> return
+        }
     }
 
 

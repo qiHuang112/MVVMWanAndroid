@@ -18,4 +18,8 @@ class MeFragment : BaseFragment<MeFragmentViewModel, FragmentMeBinding>() {
 
     override fun initView() {
     }
+
+    override fun getData() {
+
+    }
 }

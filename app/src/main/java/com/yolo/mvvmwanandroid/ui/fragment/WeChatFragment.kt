@@ -16,6 +16,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.WeChatFragmentViewModel
+import kotlinx.android.synthetic.main.item_reload.view.*
 
 /**
  * 公众号
@@ -33,9 +34,10 @@ class WeChatFragment : BaseFragment<WeChatFragmentViewModel, FragmentWechatBindi
     override val layoutId = R.layout.fragment_wechat
 
     override fun initView() {
-
-
-
+        mDataBinding.viewModel = mViewModel
+        mDataBinding.reloadView.button_reload.setOnClickListener {
+            getData()
+        }
 
         mViewModel.apply {
             title.observe(viewLifecycleOwner, Observer { mutableList ->
@@ -69,17 +71,21 @@ class WeChatFragment : BaseFragment<WeChatFragmentViewModel, FragmentWechatBindi
                 mDataBinding.vpWechat.offscreenPageLimit = fragments.size
 
                 mDataBinding.tabWeChat.setupWithViewPager(mDataBinding.vpWechat)
-
-
             })
 
-            getTitle()
         }
+
+
 
     }
 
     override fun scrollToTop() {
         if (fragments.isEmpty()) return
         fragments[mDataBinding.vpWechat.currentItem].scrollToTop()
+    }
+
+    override fun getData() {
+        mViewModel.getTitle()
+
     }
 }

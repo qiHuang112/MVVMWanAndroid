@@ -11,7 +11,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
  * @author yolo.huang
  * @date 2020/9/15
  */
-class PlazaFragmentViewModel(application: Application):BaseViewModel(application) {
+class PlazaFragmentViewModel(application: Application):BaseBlogViewModel(application) {
 
     companion object{
         const val INIT_PAGE = 0
@@ -20,15 +20,13 @@ class PlazaFragmentViewModel(application: Application):BaseViewModel(application
     private var page = INIT_PAGE
 
     val plaza:MutableLiveData<MutableList<Blog>> = MutableLiveData()
-    val refreshStatus:MutableLiveData<Boolean> = MutableLiveData()
-    val loadMoreStatus:MutableLiveData<LoadMoreStatus> = MutableLiveData()
 
 
     private val plazaRepository by lazy { PlazaRepository() }
 
 
     fun getPlaza(){
-        refreshStatus.value = true
+        refreshStatus.set(true)
         launch(
             block = {
                 val blog = plazaRepository.getPlaza(INIT_PAGE)
@@ -36,10 +34,12 @@ class PlazaFragmentViewModel(application: Application):BaseViewModel(application
                 plaza.value = mutableListOf<Blog>().apply{
                     addAll(blog.datas)
                 }
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(false)
             },
             error = {
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(true)
             }
         )
     }

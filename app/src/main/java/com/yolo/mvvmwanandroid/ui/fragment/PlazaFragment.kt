@@ -11,6 +11,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.PlazaFragmentViewModel
+import kotlinx.android.synthetic.main.item_reload.view.*
 
 /**
  * @author yolo.huang
@@ -18,58 +19,44 @@ import com.yolo.mvvmwanandroid.viewmodel.PlazaFragmentViewModel
  */
 class PlazaFragment :BaseFragment<PlazaFragmentViewModel,FragmentPlazaBinding>(),ScrollToTop{
 
-    companion object{
-        val instance =  PlazaFragment()
-    }
 
-    override val layoutId: Int
-        get() = R.layout.fragment_plaza
+    override val layoutId: Int = R.layout.fragment_plaza
 
     override fun initView() {
         val adapter = BlogAdapter().apply {
-            loadMoreModule.loadMoreView = CommonLoadMoreView()
             loadMoreModule.setOnLoadMoreListener {
                 mViewModel.loadMorePlaza()
             }
             setOnItemClickListener { _, _, position ->
                 DetailActivity.enterDetail(mActivity,data[position])
             }
-            setDiffCallback(BlogDiffCallBack())
-            animationEnable = true
-
         }
-        mDataBinding.adapter = adapter
-
-        mDataBinding.srlPlaza.run {
-            setColorSchemeResources(R.color.textColorPrimary)
-            setProgressBackgroundColorSchemeResource(R.color.bgColorPrimary)
-            setOnRefreshListener {
-                mViewModel.getPlaza()
+        mDataBinding.apply {
+            this.adapter = adapter
+            viewModel = mViewModel
+            srlPlaza.setOnRefreshListener {
+                    mViewModel.getPlaza()
+            }
+            reloadView.button_reload.setOnClickListener {
+                getData()
             }
         }
 
         mViewModel.apply {
-            refreshStatus.observe(viewLifecycleOwner, Observer {
-                mDataBinding.srlPlaza.isRefreshing = it
-            })
-            loadMoreStatus.observe(viewLifecycleOwner, Observer {
-                when(it){
-                    LoadMoreStatus.ERROR -> adapter.loadMoreModule.loadMoreFail()
-                    LoadMoreStatus.END -> adapter.loadMoreModule.loadMoreEnd()
-                    LoadMoreStatus.COMPLETED ->adapter.loadMoreModule.loadMoreComplete()
-                    else -> return@Observer
-                }
-            })
-
+            loadMoreStatus.observe(viewLifecycleOwner,adapter)
             plaza.observe(viewLifecycleOwner, Observer {
                 adapter.setNewInstance(it)
             })
 
-            getPlaza()
+
         }
     }
 
     override fun scrollToTop() {
         mDataBinding.rvPlaza.smoothScrollToPosition(0)
+    }
+
+    override fun getData() {
+        mViewModel.getPlaza()
     }
 }

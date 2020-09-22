@@ -13,6 +13,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.WeChatBlogViewModel
+import kotlinx.android.synthetic.main.item_reload.view.*
 
 class WeChatBlogFragment : BaseFragment<WeChatBlogViewModel, FragmentWechatBlogBinding>(),
     ScrollToTop {
@@ -37,50 +38,39 @@ class WeChatBlogFragment : BaseFragment<WeChatBlogViewModel, FragmentWechatBlogB
             category = getParcelable<Category>(CATEGORY) ?: return
         }
         val adapter = BlogAdapter().apply {
-            loadMoreModule.apply {
-                loadMoreView = CommonLoadMoreView()
-                setOnLoadMoreListener {
+            loadMoreModule.setOnLoadMoreListener {
                     mViewModel.loadMoreList(category)
                 }
-            }
             setOnItemClickListener { _, _, position ->
                 DetailActivity.enterDetail(mActivity, data[position])
             }
-            setDiffCallback(BlogDiffCallBack())
-            animationEnable = true
         }
-
-        mDataBinding.adapter = adapter
-        mDataBinding.srlWeChat.apply {
-            setColorSchemeResources(R.color.textColorPrimary)
-            setProgressBackgroundColorSchemeResource(R.color.bgColorPrimary)
-            setOnRefreshListener {
+        mDataBinding.apply {
+            this.adapter = adapter
+            viewModel = mViewModel
+            srlWeChat.setOnRefreshListener {
                 mViewModel.refreshWeChatList(category)
             }
+            reloadView.button_reload.setOnClickListener {
+                getData()
+            }
         }
-
         mViewModel.apply {
             blog.observe(viewLifecycleOwner, Observer {
                 adapter.setNewInstance(it)
             })
-            refreshStatus.observe(viewLifecycleOwner, Observer {
-                mDataBinding.srlWeChat.isRefreshing = it
-            })
-            loadMoreStatus.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    LoadMoreStatus.ERROR -> adapter.loadMoreModule.loadMoreFail()
-                    LoadMoreStatus.END -> adapter.loadMoreModule.loadMoreEnd()
-                    LoadMoreStatus.COMPLETED -> adapter.loadMoreModule.loadMoreComplete()
-                    else -> return@Observer
-                }
-            })
+            loadMoreStatus.observe(viewLifecycleOwner,adapter)
         }
 
-        mViewModel.refreshWeChatList(category)
+
     }
 
     override fun scrollToTop() {
         mDataBinding.rvWeChat.smoothScrollToPosition(0)
+    }
+
+    override fun getData() {
+        mViewModel.refreshWeChatList(category)
     }
 
 

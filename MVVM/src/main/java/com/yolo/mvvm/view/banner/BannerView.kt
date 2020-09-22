@@ -81,7 +81,7 @@ class BannerView @JvmOverloads constructor(
     /**
      * 添加数据
      */
-    fun setData(items:List<BannerItemData>){
+    fun setData(items:List<BannerItemData>?){
         listData.clear()
         if (!items.isNullOrEmpty()) {
             listData.addAll(items)

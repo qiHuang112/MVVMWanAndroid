@@ -38,8 +38,11 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : Fragment
             this, ViewModelProvider.AndroidViewModelFactory(mActivity.application)
         ).get((this.javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>)
         initView()
+        getData()
     }
 
     abstract fun initView()
+
+    abstract fun getData()
 
 }

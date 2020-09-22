@@ -11,6 +11,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.AnswerFragmentViewModel
+import kotlinx.android.synthetic.main.item_reload.view.*
 
 /**
  * @author yolo.huang
@@ -18,56 +19,43 @@ import com.yolo.mvvmwanandroid.viewmodel.AnswerFragmentViewModel
  */
 class AnswerFragment:BaseFragment<AnswerFragmentViewModel,FragmentAnswerBinding>(),ScrollToTop {
 
-    companion object{
-        val instance = AnswerFragment()
-    }
-
     override val layoutId: Int
         get() = R.layout.fragment_answer
 
     override fun initView() {
         val adapter = BlogAdapter().apply {
-            loadMoreModule.loadMoreView = CommonLoadMoreView()
             loadMoreModule.setOnLoadMoreListener {
                 mViewModel.loadMoreAnswer()
             }
             setOnItemClickListener { _, _, position ->
                 DetailActivity.enterDetail(mActivity,data[position])
             }
-            animationEnable = true
-            setDiffCallback(BlogDiffCallBack())
         }
-        mDataBinding.adapter = adapter
-        mDataBinding.srlAnswer.run {
-            setColorSchemeResources(R.color.textColorPrimary)
-            setProgressBackgroundColorSchemeResource(R.color.bgColorPrimary)
-            setOnRefreshListener {
-                mViewModel.getAnswer()
+        mDataBinding.apply {
+            viewModel = mViewModel
+            this.adapter = adapter
+            srlAnswer.setOnRefreshListener {
+                    mViewModel.getAnswer()
+            }
+            reloadView.button_reload.setOnClickListener {
+                getData()
             }
         }
 
         mViewModel.apply {
-            refreshStatus.observe(viewLifecycleOwner, Observer {
-                mDataBinding.srlAnswer.isRefreshing = it
-            })
-            loadMoreStatus.observe(viewLifecycleOwner, Observer {
-                when(it){
-                    LoadMoreStatus.ERROR -> adapter.loadMoreModule.loadMoreFail()
-                    LoadMoreStatus.END -> adapter.loadMoreModule.loadMoreEnd()
-                    LoadMoreStatus.COMPLETED ->adapter.loadMoreModule.loadMoreComplete()
-                    else -> return@Observer
-                }
-            })
 
+            loadMoreStatus.observe(viewLifecycleOwner, adapter)
             answer.observe(viewLifecycleOwner, Observer {
                 adapter.setNewInstance(it)
             })
-
-            getAnswer()
         }
     }
 
     override fun scrollToTop() {
         mDataBinding.rvAnswer.smoothScrollToPosition(0)
+    }
+
+    override fun getData() {
+        mViewModel.getAnswer()
     }
 }

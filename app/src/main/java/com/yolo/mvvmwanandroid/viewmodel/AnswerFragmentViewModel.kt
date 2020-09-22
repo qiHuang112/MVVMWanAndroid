@@ -11,7 +11,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
  * @author yolo.huang
  * @date 2020/9/15
  */
-class AnswerFragmentViewModel(application: Application):BaseViewModel(application) {
+class AnswerFragmentViewModel(application: Application):BaseBlogViewModel(application) {
 
     companion object{
         const val INIT_PAGE = 0
@@ -20,14 +20,12 @@ class AnswerFragmentViewModel(application: Application):BaseViewModel(applicatio
     private var page = INIT_PAGE
 
     val answer: MutableLiveData<MutableList<Blog>> = MutableLiveData()
-    val refreshStatus: MutableLiveData<Boolean> = MutableLiveData()
-    val loadMoreStatus: MutableLiveData<LoadMoreStatus> = MutableLiveData()
 
 
     private val answerRepository by lazy { AnswerRepository() }
 
     fun getAnswer(){
-        refreshStatus.value = true
+        refreshStatus.set(true)
         launch(
             block = {
                 val blog = answerRepository.getAnswer(INIT_PAGE)
@@ -35,10 +33,12 @@ class AnswerFragmentViewModel(application: Application):BaseViewModel(applicatio
                 answer.value = mutableListOf<Blog>().apply{
                     addAll(blog.datas)
                 }
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(false)
             },
             error = {
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(true)
             }
         )
     }

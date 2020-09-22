@@ -11,6 +11,7 @@ import com.yolo.mvvmwanandroid.ui.loadmore.CommonLoadMoreView
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.HomeBlogFragmentViewModel
+import kotlinx.android.synthetic.main.item_reload.view.*
 
 /**
  * @author yolo.huang
@@ -18,57 +19,45 @@ import com.yolo.mvvmwanandroid.viewmodel.HomeBlogFragmentViewModel
  */
 class HomeBlogFragment:BaseFragment<HomeBlogFragmentViewModel, FragmentHomeBlogBinding>(),ScrollToTop {
 
-    companion object{
-        val instance =  HomeBlogFragment()
-    }
-
     override val layoutId: Int
         get() = R.layout.fragment_home_blog
 
     override fun initView() {
         val adapter = BlogAdapter().apply {
-            loadMoreModule.apply {
-                loadMoreView = CommonLoadMoreView()
-                setOnLoadMoreListener {
-                    mViewModel.getMoreBlog()
-                }
-                setOnItemClickListener { _, _, position ->
-                    DetailActivity.enterDetail(mActivity,data[position])
-                }
+            loadMoreModule.setOnLoadMoreListener {
+                mViewModel.getMoreBlog()
             }
-            animationEnable = true
-            setDiffCallback(BlogDiffCallBack())
-        }
-        mDataBinding.srlBlog.run {
-            setColorSchemeResources(R.color.textColorPrimary)
-            setProgressBackgroundColorSchemeResource(R.color.bgColorPrimary)
-            setOnRefreshListener {
-                mViewModel.getBlog()
+            setOnItemClickListener { _, _, position ->
+                DetailActivity.enterDetail(mActivity,data[position])
             }
         }
-        mDataBinding.adapter = adapter
+        mDataBinding.apply {
+            srlBlog.setOnRefreshListener {
+                    mViewModel.getBlog()
+            }
+            reloadView.button_reload.setOnClickListener {
+                getData()
+            }
+            this.adapter = adapter
+            viewModel = mViewModel
+        }
         mViewModel.apply {
             blog.observe(viewLifecycleOwner,Observer{
                 adapter.setNewInstance(it)
             })
-            refreshStatus.observe(viewLifecycleOwner, Observer {
-                mDataBinding.srlBlog.isRefreshing = it
-            })
-            loadMoreStatus.observe(viewLifecycleOwner, Observer {
-                when(it){
-                    LoadMoreStatus.ERROR -> adapter.loadMoreModule.loadMoreFail()
-                    LoadMoreStatus.END -> adapter.loadMoreModule.loadMoreEnd()
-                    LoadMoreStatus.COMPLETED ->adapter.loadMoreModule.loadMoreComplete()
-                    else -> return@Observer
-                }
-            })
-            getBlog()
+            loadMoreStatus.observe(viewLifecycleOwner, adapter)
         }
 
+    }
+
+
+    override fun getData() {
+        mViewModel.getBlog()
     }
 
     override fun scrollToTop() {
         mDataBinding.rvHomeBlog.smoothScrollToPosition(0)
 
     }
+
 }

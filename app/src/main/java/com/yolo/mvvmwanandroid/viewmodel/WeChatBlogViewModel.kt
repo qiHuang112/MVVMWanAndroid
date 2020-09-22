@@ -8,7 +8,7 @@ import com.yolo.mvvmwanandroid.network.bean.Category
 import com.yolo.mvvmwanandroid.repository.WeChatRepository
 import com.yolo.mvvmwanandroid.ui.loadmore.LoadMoreStatus
 
-class WeChatBlogViewModel(application: Application) : BaseViewModel(application) {
+class WeChatBlogViewModel(application: Application) : BaseBlogViewModel(application) {
 
     companion object {
         const val INITIAL_PAGE = 1
@@ -17,8 +17,6 @@ class WeChatBlogViewModel(application: Application) : BaseViewModel(application)
     private val weChatRepository by lazy {
         WeChatRepository()
     }
-    val refreshStatus: MutableLiveData<Boolean> = MutableLiveData()
-    val loadMoreStatus: MutableLiveData<LoadMoreStatus> = MutableLiveData()
 
     val title: MutableLiveData<MutableList<Category>> = MutableLiveData()
     val blog: MutableLiveData<MutableList<Blog>> = MutableLiveData()
@@ -27,7 +25,7 @@ class WeChatBlogViewModel(application: Application) : BaseViewModel(application)
 
 
     fun refreshWeChatList(category: Category) {
-        refreshStatus.value = true
+        refreshStatus.set(true)
         launch(
             block = {
                 val id = category.id
@@ -36,11 +34,12 @@ class WeChatBlogViewModel(application: Application) : BaseViewModel(application)
                 page = pagination.curPage
                 blog.value = pagination.datas.toMutableList()
 
-                refreshStatus.value = false
-
+                refreshStatus.set(false)
+                reloadStatus.set(false)
             },
             error = {
-                refreshStatus.value = false
+                refreshStatus.set(false)
+                reloadStatus.set(true)
             }
         )
     }

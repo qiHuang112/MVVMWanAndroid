@@ -18,4 +18,8 @@ class TreeFragment : BaseFragment<TreeFragmentViewModel, FragmentTreeBinding>() 
 
     override fun initView() {
     }
+
+    override fun getData() {
+
+    }
 }

@@ -2,45 +2,51 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.yolo.mvvmwanandroid.viewmodel.BaseBlogViewModel" />
+    </data>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_we_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/tab_we_chat"
             android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            visibility="@{!viewModel.reloadStatus}"
             app:tabGravity="center"
             app:tabIndicatorColor="@color/textColorPrimary"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/textColorPrimary"
-            app:tabTextColor="@color/textColorThird"/>
+            app:tabTextColor="@color/textColorThird" />
 
         <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_wechat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/vp_wechat"
             android:layout_marginBottom="60dp"
+            visibility="@{!viewModel.reloadStatus}"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintTop_toBottomOf="@id/tab_we_chat"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_we_chat" />
 
-        <include
-            android:id="@+id/reloadView"
-            layout="@layout/item_reload"
+        <LinearLayout
+            visibility="@{viewModel.reloadStatus}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/reloadView"
+                layout="@layout/item_reload"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
