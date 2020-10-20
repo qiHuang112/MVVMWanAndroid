@@ -2,6 +2,7 @@ package com.yolo.mvvmwanandroid.ui.activity
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.idlefish.flutterboost.containers.FlutterFragment
 import com.yolo.mvvm.activity.BaseActivity
 import com.yolo.mvvm.util.showToast
 import com.yolo.mvvmwanandroid.R
@@ -27,10 +28,12 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
 
     override fun initView(savedInstanceState: Bundle?) {
 
+        val fragment :FlutterFragment = FlutterFragment.NewEngineFragmentBuilder().url("tree").build()
+
         fragments = mapOf(
             R.id.nav_home to HomeFragment.instance,
             R.id.nav_article to WeChatFragment.instance,
-            R.id.nav_tree to TreeFragment.instance,
+            R.id.nav_tree to fragment,
             R.id.nav_me to MeFragment.instance
         )
 

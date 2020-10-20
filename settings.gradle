@@ -1,3 +1,0 @@
-include ':MVVM'
-include ':app'
-rootProject.name = "MVVMWanAndroid"

@@ -33,9 +33,11 @@ android {
     }
 }
 
+
 dependencies {
     implementation project(path: ':MVVM')
-
+    implementation project(':flutter')
+    implementation project(':flutter_boost')
     //room
     implementation "androidx.room:room-runtime:2.2.5"
     implementation 'androidx.appcompat:appcompat:1.2.0'
