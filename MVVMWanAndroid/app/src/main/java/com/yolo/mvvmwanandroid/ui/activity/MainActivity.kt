@@ -9,7 +9,6 @@ import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.ActivityMainBinding
 import com.yolo.mvvmwanandroid.ui.fragment.HomeFragment
 import com.yolo.mvvmwanandroid.ui.fragment.MeFragment
-import com.yolo.mvvmwanandroid.ui.fragment.TreeFragment
 import com.yolo.mvvmwanandroid.ui.fragment.WeChatFragment
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.MainActivityViewModel

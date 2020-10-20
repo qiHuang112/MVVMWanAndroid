@@ -1,9 +1,8 @@
 package com.yolo.mvvmwanandroid.viewmodel
 
 import android.app.Application
-import androidx.databinding.Observable
 import androidx.lifecycle.MutableLiveData
-import com.yolo.mvvmwanandroid.network.bean.BannerBean
+import com.yolo.mvvmwanandroid.network.bean.Banner
 import com.yolo.mvvmwanandroid.repository.BannerRepository
 
 /**
@@ -13,7 +12,7 @@ class HomeFragmentViewModel(application: Application) : BaseBlogViewModel(applic
 
     private val bannerRepository by lazy { BannerRepository() }
 
-    val banner: MutableLiveData<List<BannerBean>> = MutableLiveData()
+    val banner: MutableLiveData<List<Banner>> = MutableLiveData()
 
     fun getBanner(){
         reloadStatus.set(false)

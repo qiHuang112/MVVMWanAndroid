@@ -2,7 +2,6 @@ package com.yolo.mvvmwanandroid.network.request
 
 import com.yolo.mvvmwanandroid.network.NetworkApi
 import com.yolo.mvvmwanandroid.network.bean.*
-import com.yolo.mvvmwanandroid.network.response.ApiResponse
 
 class RequestManager private constructor() {
     companion object {
@@ -26,7 +25,7 @@ class RequestManager private constructor() {
     /**
      * 获取banner
      */
-    suspend fun getBanner():MutableList<BannerBean>{
+    suspend fun getBanner():MutableList<Banner>{
         return NetworkApi.service.getBanner().apiData()
     }
 

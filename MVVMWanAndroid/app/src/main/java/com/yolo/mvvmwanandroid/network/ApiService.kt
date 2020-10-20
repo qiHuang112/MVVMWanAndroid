@@ -19,7 +19,7 @@ interface ApiService {
     ): ApiResponse<PageData<Blog>>
 
     @GET("banner/json")
-    suspend fun getBanner():ApiResponse<MutableList<BannerBean>>
+    suspend fun getBanner():ApiResponse<MutableList<Banner>>
 
     @GET("article/list/{page}/json")
     suspend fun getBlog(@Path("page") page: Int):ApiResponse<PageData<Blog>>

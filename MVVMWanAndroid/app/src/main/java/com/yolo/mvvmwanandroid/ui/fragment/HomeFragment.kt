@@ -3,7 +3,6 @@ package com.yolo.mvvmwanandroid.ui.fragment
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Observer
 import com.yolo.mvvm.fragment.BaseFragment
 import com.yolo.mvvm.util.ImageOptions
 import com.yolo.mvvm.util.loadImage
@@ -11,7 +10,7 @@ import com.yolo.mvvm.view.banner.BannerView
 import com.yolo.mvvmwanandroid.ui.activity.DetailActivity
 import com.yolo.mvvmwanandroid.R
 import com.yolo.mvvmwanandroid.databinding.FragmentHomeBinding
-import com.yolo.mvvmwanandroid.network.bean.BannerBean
+import com.yolo.mvvmwanandroid.network.bean.Banner
 import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.ui.widget.ScrollToTop
 import com.yolo.mvvmwanandroid.viewmodel.HomeFragmentViewModel
@@ -35,7 +34,7 @@ class HomeFragment : BaseFragment<HomeFragmentViewModel, FragmentHomeBinding>(),
             listener =
                 object : BannerView.BannerItemOnClickListener {
                     override fun onItemClick(item: BannerView.BannerItemData) {
-                        if(item is BannerBean){
+                        if(item is Banner){
                             DetailActivity.enterDetail(mActivity,Blog(title = item.title,link = item.url))
                         }
                     }
