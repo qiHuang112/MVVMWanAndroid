@@ -47,4 +47,44 @@ data class Blog (
     var visible: Int = 0,
     var zan: Int = 0,
     var top: Boolean = false
-): Parcelable
+): Parcelable{
+
+    companion object{
+        fun fromMap(map:Map<String,Any>):Blog{
+            val blog = Blog()
+            blog.title = map["title"] as String
+            blog.collect = map["collect"] as Boolean
+            blog.desc = map["desc"] as String
+            blog.id = map["id"] as Int
+            blog.link = map["link"] as String
+/*            blog.apkLink = map["apkLink"] as String
+            blog.audit = map["audit"] as Int
+            blog.author = map["author"] as String
+            blog.chapterId = map["chapterId"] as Int
+            blog.chapterName = map["chapterName"] as String
+            blog.courseId = map["courseId"] as Int
+            blog.envelopePic = map["envelopePic"] as String
+            blog.niceDate = map["niceDate"] as String
+            blog.niceShareDate = map["niceShareDate"] as String
+            blog.origin = map["origin"] as String
+            blog.originId = map["originId"] as Int
+            blog.prefix = map["prefix"] as String
+            blog.publishTime = map["publishTime"] as Long
+            blog.projectLink = map["projectLink"] as String
+            blog.selfVisible = map["selfVisible"] as Int
+            blog.shareDate = map["shareDate"] as Long
+            blog.shareUser = map["shareUser"] as String
+            blog.superChapterId = map["superChapterId"] as Int
+            blog.superChapterName = map["superChapterName"] as String
+            blog.type = map["type"] as Int
+            blog.userId = map["userId"] as Int
+            blog.visible = map["visible"] as Int
+            blog.zan = map["zan"] as Int
+            blog.fresh = map["fresh"] as Boolean*/
+            return blog
+        }
+    }
+
+
+
+}

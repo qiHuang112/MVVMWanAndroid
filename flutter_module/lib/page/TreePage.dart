@@ -12,12 +12,18 @@ class TreeWidget extends StatefulWidget{
 
 }
 
-class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin{
+class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin,AutomaticKeepAliveClientMixin{
 
   TabController tabController;
   final PageController pageController = PageController();
   final ScrollController scrollController = new ScrollController();
 
+  @override
+  void dispose() {
+    super.dispose();
+    tabController.dispose();
+    pageController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +53,7 @@ class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin{
           )
         ],
       ),
-      body: ProviderWidget<TreePageModel>(
+      body:new ProviderWidget<TreePageModel>(
         model: TreePageModel(),
         onModelInit: (model){
           model.loadData();
@@ -93,6 +99,9 @@ class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin{
     }
     return pageList;
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
 }
 

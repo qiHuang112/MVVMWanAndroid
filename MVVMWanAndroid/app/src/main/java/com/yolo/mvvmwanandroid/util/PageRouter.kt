@@ -3,7 +3,10 @@ package com.yolo.mvvmwanandroid.util
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.idlefish.flutterboost.containers.BoostFlutterActivity
+import com.yolo.mvvmwanandroid.network.bean.Blog
 import com.yolo.mvvmwanandroid.ui.activity.DetailActivity
 import com.yolo.mvvmwanandroid.ui.activity.MainActivity
 
@@ -23,9 +26,11 @@ object PageRouter {
         "tab" to "tab",
     )
 
-    val DETAIL_ACTIVITY_PAGE_URL = "sample://detailPage"
-    val FLUTTER_PAGE_URL = "sample://flutterPage"
-    val MAIN_PAGE_URL = "sample://mainPage"
+    val DETAIL_ACTIVITY_PAGE_URL = "android://detailPage"
+    val FLUTTER_PAGE_URL = "android://flutterPage"
+    val MAIN_PAGE_URL = "android://mainPage"
+
+    val DETAIL_KEY= "BLOG_KEY"
 
     fun openPageByUrl(
         context: Context,
@@ -61,7 +66,11 @@ object PageRouter {
                     return true
                 }
                 url.startsWith(DETAIL_ACTIVITY_PAGE_URL) -> {
-                    context.startActivity(Intent(context, DetailActivity::class.java))
+                    val map = params[DETAIL_KEY] as Map<String,String>
+                    val blog = Blog.fromMap(map)
+                    val intent = Intent(context,DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.PARAM_BLOG,blog)
+                    context.startActivity(intent)
                     return true
                 }
                 else -> false

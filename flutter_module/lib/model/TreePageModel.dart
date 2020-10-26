@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_module/api/ApiService.dart';
+import 'package:flutter_module/bean/Error.dart';
 import 'package:flutter_module/bean/Tree.dart';
+import 'package:flutter_module/utils/ToastUtil.dart';
 
 class TreePageModel with ChangeNotifier{
   List<TreeBean> list = [];
@@ -17,7 +19,8 @@ class TreePageModel with ChangeNotifier{
       this.list = treeList;
       loading = false;
       error = false;
-    },fail: (){
+    },fail: (err){
+          showError(err);
           loading = false;
           error = true;
         },complete:() => notifyListeners());
@@ -26,6 +29,10 @@ class TreePageModel with ChangeNotifier{
     loading = true;
     notifyListeners();
     //loadData();
+  }
+
+  void showError(ErrorBean err) {
+    ToastUtil.showError(err.errMsg);
   }
 
 }

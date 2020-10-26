@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_module/bean/Bean.dart';
+import 'package:flutter_module/bean/Error.dart';
 import 'package:flutter_module/utils/AppManager.dart';
 import 'package:flutter_module/utils/HttpConstant.dart';
 import 'package:http/http.dart' as http;
@@ -29,17 +30,20 @@ class ApiService{
               success(baseResponse.data);
               break;
             case 1001:
-              fail();
+              ErrorBean error = ErrorBean("未登录",1001);
+              fail(error);
               break;
           }
         }else{
-          fail();
+          ErrorBean error = ErrorBean("数据解析错误",101);
+          fail(error);
         }
       }else{
         throw Exception('"Request failed with status: ${response.statusCode}"');
       }
     }catch(e){
-      fail();
+      ErrorBean error = ErrorBean(e.toString(),2000);
+      fail(error);
     }finally{
       if(complete!=null){
         complete();

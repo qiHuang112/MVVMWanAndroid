@@ -86,7 +86,7 @@ class Blog {
 
   String get superChapterName => _superChapterName;
 
-  List<dynamic> get tags => _tags;
+  List<Tag> get tags => _tags;
 
   String get title => _title;
 
@@ -125,7 +125,7 @@ class Blog {
       String shareUser,
       int superChapterId,
       String superChapterName,
-      List<dynamic> tags,
+      List<Tag> tags,
       String title,
       int type,
       int userId,
