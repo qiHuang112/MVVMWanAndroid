@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_module/bean/Blog.dart';
 import 'package:flutter_module/config/Color.dart';
-import 'package:flutter_module/config/string.dart';
+import 'package:flutter_module/config/String.dart';
 import 'package:flutter_module/page/BlogTitleWidget.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 
@@ -30,7 +30,7 @@ class BlogItemState extends State<BlogItemPage>{
       },
     ),
       child: Card(
-        elevation: 15.0,
+        elevation: 1.5,
         /*shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(14.0))),*/
         margin: EdgeInsets.fromLTRB(0,5,0,5),

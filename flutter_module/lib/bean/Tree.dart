@@ -93,6 +93,7 @@ class Children {
   int _parentChapterId;
   bool _userControlSetTop;
   int _visible;
+  bool _selected = false;
 
   List<Children> get children => _children;
 
@@ -110,6 +111,13 @@ class Children {
 
   int get visible => _visible;
 
+  bool get selected => _selected;
+
+  setSelected(bool selected){
+    _selected = selected;
+  }
+
+
   Children(
       {List<Children> children,
       int courseId,
@@ -118,7 +126,8 @@ class Children {
       int order,
       int parentChapterId,
       bool userControlSetTop,
-      int visible}) {
+      int visible,
+      bool selected}) {
     _children = children;
     _courseId = courseId;
     _id = id;
@@ -127,6 +136,7 @@ class Children {
     _parentChapterId = parentChapterId;
     _userControlSetTop = userControlSetTop;
     _visible = visible;
+    _selected = selected;
   }
 
   Children.fromJson(dynamic json) {
@@ -143,6 +153,7 @@ class Children {
     _parentChapterId = json["parentChapterId"];
     _userControlSetTop = json["userControlSetTop"];
     _visible = json["visible"];
+    _selected = json["selected"];
   }
 
   Map<String, dynamic> toJson() {
@@ -157,6 +168,7 @@ class Children {
     map["parentChapterId"] = _parentChapterId;
     map["userControlSetTop"] = _userControlSetTop;
     map["visible"] = _visible;
+    map["selected"] = _selected;
     return map;
   }
 }

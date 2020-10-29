@@ -4,7 +4,7 @@ import 'package:flutter_module/bean/Tree.dart';
 import 'package:flutter_module/model/ProviderWidget.dart';
 import 'package:flutter_module/model/TreePageModel.dart';
 import 'package:flutter_module/page/TreeListPage.dart';
-import '../config/string.dart';
+import '../config/String.dart';
 
 class TreeWidget extends StatefulWidget{
   @override

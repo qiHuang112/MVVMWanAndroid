@@ -35,7 +35,7 @@ class TreeListState extends State<TreeListPage> with TickerProviderStateMixin {
     return new ProviderWidget<TreeListPageModel>(
       model: TreeListPageModel(),
       onModelInit: (model) {
-        model.loadData(_bean.children[0].id);
+        refreshList(model, 0);
       },
       builder: (context, model, child) {
         return Column(
@@ -46,19 +46,21 @@ class TreeListState extends State<TreeListPage> with TickerProviderStateMixin {
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: ()=> refreshList(model, index),
-                      child: new Container(
-                          padding: EdgeInsets.all(5),
-                          margin: EdgeInsets.all(5),
-                          decoration: BoxDecoration(color: Color(0xFFF4F4F4)),
-                          child: Center(
-                               child:Text(
-                                _bean.children[index].name,
-                                style: TextStyle(fontSize: 12, color: Colors.grey),
-                              )
+                    return new Container(
+                      margin: EdgeInsets.only(left: 8),
+                       child:new  ChoiceChip(
+                          label:Text(
+                            _bean.children[index].name,
+                            style: TextStyle(fontSize: 13, color: DColor.textColorPrimary),
                           ),
-                          ),
+                          selected:_bean.children[index].selected,
+                           padding: EdgeInsets.only(left: 2,right: 2,top: 1,bottom: 1),
+                          onSelected: (selected){
+                            refreshList(model, index);
+                          },
+                          selectedColor: DColor.bgColorThird,
+                          backgroundColor: DColor.bgColorSecondary,
+                        )
                     );
                   },
                   itemCount: _bean.children.length,
@@ -79,6 +81,10 @@ class TreeListState extends State<TreeListPage> with TickerProviderStateMixin {
   }
 
   refreshList(TreeListPageModel model, int index) {
+    for(Children children in _bean.children){
+      children.setSelected(false);
+    }
+    _bean.children[index].setSelected(true);
     model.loadData(_bean.children[index].id);
   }
 }
