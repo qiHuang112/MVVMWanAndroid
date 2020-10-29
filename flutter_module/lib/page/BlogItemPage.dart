@@ -6,17 +6,16 @@ import 'package:flutter_module/config/String.dart';
 import 'package:flutter_module/page/BlogTitleWidget.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 
-class BlogItemPage extends StatefulWidget{
-
+class BlogItemPage extends StatefulWidget {
   Blog blog;
+
   BlogItemPage(this.blog);
 
   @override
   BlogItemState createState() => BlogItemState();
-
 }
 
-class BlogItemState extends State<BlogItemPage>{
+class BlogItemState extends State<BlogItemPage> {
   Blog blog;
 
   @override
@@ -24,16 +23,14 @@ class BlogItemState extends State<BlogItemPage>{
     blog = widget.blog;
     return GestureDetector(
       onTap: () => FlutterBoost.singleton.open(
-      'android://detailPage',
-      urlParams: <String, dynamic>{
-        'BLOG_KEY': blog.toJson()
-      },
-    ),
+        'android://detailPage',
+        urlParams: <String, dynamic>{'BLOG_KEY': blog.toJson()},
+      ),
       child: Card(
         elevation: 1.5,
         /*shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(14.0))),*/
-        margin: EdgeInsets.fromLTRB(0,5,0,5),
+        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
         child: Container(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
           child: Column(
@@ -44,20 +41,16 @@ class BlogItemState extends State<BlogItemPage>{
                       flex: 1,
                       child: Row(
                         children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(left: 5),
-                            child: Offstage(
-                              offstage: blog.type == 0 ?? false,
-                              child: Text(
-                                DString.top,
-                                style: TextStyle(
-                                    color: DColor.colorBadge,
-                                    fontSize: 12
-                                ),
-                              ),),
+                          Offstage(
+                            offstage: blog.type == 0 ?? false,
+                            child: Text(
+                              DString.top,
+                              style: TextStyle(
+                                  color: DColor.colorBadge, fontSize: 12),
+                            ),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 5),
+                            margin: EdgeInsets.only(left: 5),
                             child: Text(
                                 "${blog.author.isNotEmpty ? blog.author : blog.shareUser}",
                                 overflow: TextOverflow.ellipsis,
@@ -68,15 +61,14 @@ class BlogItemState extends State<BlogItemPage>{
                       )),
                   Align(
                       alignment: Alignment.centerRight,
-                      child:Container(
+                      child: Container(
+                        margin: EdgeInsets.only(right: 5),
                         child: Text(
                           "${blog.chapterName}/${blog.superChapterName}",
                           style: TextStyle(
-                              color: Colors.white.withAlpha(120),
-                              fontSize: 11.0),
+                              color: DColor.textColorThird, fontSize: 11.0),
                         ),
-                      )
-                  ),
+                      )),
                 ],
               ),
               Row(
@@ -89,16 +81,21 @@ class BlogItemState extends State<BlogItemPage>{
                         SizedBox(
                           height: 5,
                         ),
-                        BlogTitleWidget(blog.title),
+                        Container(
+                          margin: EdgeInsets.only(left: 5),
+                          child: BlogTitleWidget(blog.title),
+                        ),
                         SizedBox(
                           height: 2,
                         ),
-                        Text(
-                          blog.desc,
-                          style: Theme.of(context).textTheme.caption,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        )
+                        Container(
+                            margin: EdgeInsets.only(left: 5),
+                            child: Text(
+                              blog.desc,
+                              style: Theme.of(context).textTheme.caption,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            )),
                       ],
                     ),
                   ),
@@ -107,27 +104,22 @@ class BlogItemState extends State<BlogItemPage>{
                   ),
                 ],
               ),
-
               Row(
                 children: <Widget>[
                   Expanded(
-                    flex: 1,
+                      flex: 1,
                       child: Row(
                         children: <Widget>[
+                          Offstage(
+                              offstage: !blog.fresh ?? true,
+                              child: Text(
+                                DString.newBlog,
+                                style: TextStyle(
+                                    color: DColor.colorBadge, fontSize: 12),
+                              )),
                           Container(
-                              child: Offstage(
-                                  offstage: !blog.fresh ?? true,
-                                  child:Text(
-                                    DString.newBlog,
-                                    style: TextStyle(
-                                        color: DColor.colorBadge,
-                                        fontSize: 12
-                                    ),
-                                  )),
-                          ),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            child: Text("${blog.niceDate}",
+                            padding: EdgeInsets.only(left: 5),
+                            child: Text(blog.niceDate,
                                 textAlign: TextAlign.center,
                                 style: Theme.of(context).textTheme.caption),
                           )
@@ -137,21 +129,19 @@ class BlogItemState extends State<BlogItemPage>{
                     alignment: Alignment.centerRight,
                     child: !blog.collect
                         ? IconButton(
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(right: 5),
-                      icon: Icon(
-                        Icons.star_border,
-                      ),
-                      //onPressed: () => _collect(uniqueKey),
-                    )
+                            alignment: Alignment.centerRight,
+                            icon: Icon(
+                              Icons.star_border,
+                            ),
+                            //onPressed: () => _collect(uniqueKey),
+                          )
                         : IconButton(
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(right: 5),
-                      icon: Icon(
-                        Icons.star,
-                      ),
-                      //onPressed: () => _collect(uniqueKey),
-                    ),
+                            alignment: Alignment.centerRight,
+                            icon: Icon(
+                              Icons.star,
+                            ),
+                            //onPressed: () => _collect(uniqueKey),
+                          ),
                   ),
                 ],
               ),
@@ -159,13 +149,9 @@ class BlogItemState extends State<BlogItemPage>{
           ),
         ),
       ),
-
-
     );
   }
 
   @override
   bool get wantKeepAlive => true;
-
 }
-
