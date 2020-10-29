@@ -14,7 +14,7 @@ class ApiService{
 
   static final tree_url = "${base_url}tree/json";
 
-  static final tree_detail_url = "${base_url}article/list/0/json?cid=";
+  static final tree_detail_url = "${base_url}article/list/";
 
 
 

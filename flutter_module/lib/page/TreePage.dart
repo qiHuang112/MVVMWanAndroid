@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/bean/Tree.dart';
 import 'package:flutter_module/model/ProviderWidget.dart';
 import 'package:flutter_module/model/TreePageModel.dart';
+import 'package:flutter_module/page/LoadingContainer.dart';
 import 'package:flutter_module/page/TreeListPage.dart';
 import '../config/String.dart';
 
-class TreeWidget extends StatefulWidget{
+class TreeWidget extends StatefulWidget {
   @override
   _TreePageState createState() => _TreePageState();
-
 }
 
-class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin,AutomaticKeepAliveClientMixin{
-
+class _TreePageState extends State<TreeWidget>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController tabController;
   final PageController pageController = PageController();
   final ScrollController scrollController = new ScrollController();
@@ -37,7 +37,7 @@ class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin,Aut
             color: Colors.black,
           ),
         ),
-        brightness:Brightness.light,
+        brightness: Brightness.light,
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0,
@@ -47,45 +47,48 @@ class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin,Aut
               Icons.filter_list,
               color: Colors.black87,
             ),
-            onPressed: (){
-
-            },
+            onPressed: () {},
           )
         ],
       ),
-      body:new ProviderWidget<TreePageModel>(
+      body: new ProviderWidget<TreePageModel>(
         model: TreePageModel(),
-        onModelInit: (model){
+        onModelInit: (model) {
           model.loadData();
         },
-        builder: (context,model,child){
-          tabController = TabController(length: model.list.length,vsync: this);
-          return Column(
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(color: Colors.white),
-                child: TabBar(
-                  controller: tabController,
-                  labelColor: Colors.black,
-                  isScrollable: true,
-                  unselectedLabelColor: Colors.black54,
-                  labelStyle: TextStyle(fontSize: 14),
-                  unselectedLabelStyle: TextStyle(fontSize: 14),
-                  indicatorColor: Colors.black,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  tabs: model.list.map((e) => Tab(text: e.name)).toList(),
-                  onTap: (index) => pageController.animateToPage(index, duration: kTabScrollDuration, curve: Curves.ease),
-                ),
-              ),
-              Expanded(
-                child: PageView(
-                  controller: pageController,
-                  onPageChanged: (index) =>tabController.index = index,
-                  children: initPage(model),
-                ),
-              )
-            ],
-          );
+        builder: (context, model, child) {
+          tabController = TabController(length: model.list.length, vsync: this);
+          return new LoadingContainer(
+              loading: model.loading,
+              error: model.error,
+              retry: model.retry,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: TabBar(
+                      controller: tabController,
+                      labelColor: Colors.black,
+                      isScrollable: true,
+                      unselectedLabelColor: Colors.black54,
+                      labelStyle: TextStyle(fontSize: 14),
+                      unselectedLabelStyle: TextStyle(fontSize: 14),
+                      indicatorColor: Colors.black,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      tabs: model.list.map((e) => Tab(text: e.name)).toList(),
+                      onTap: (index) => pageController.animateToPage(index,
+                          duration: kTabScrollDuration, curve: Curves.ease),
+                    ),
+                  ),
+                  Expanded(
+                    child: PageView(
+                      controller: pageController,
+                      onPageChanged: (index) => tabController.index = index,
+                      children: initPage(model),
+                    ),
+                  )
+                ],
+              ));
         },
       ),
     );
@@ -93,7 +96,7 @@ class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin,Aut
 
   initPage(TreePageModel model) {
     List<TreeListPage> pageList = List();
-    for(TreeBean bean in model.list){
+    for (TreeBean bean in model.list) {
       var page = TreeListPage(bean);
       pageList.add(page);
     }
@@ -102,6 +105,4 @@ class _TreePageState extends State<TreeWidget> with TickerProviderStateMixin,Aut
 
   @override
   bool get wantKeepAlive => true;
-
 }
-

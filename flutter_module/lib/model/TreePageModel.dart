@@ -25,10 +25,12 @@ class TreePageModel with ChangeNotifier{
           error = true;
         },complete:() => notifyListeners());
   }
-  void retry(){
+
+
+  retry(){
     loading = true;
     notifyListeners();
-    //loadData();
+    loadData();
   }
 
   void showError(ErrorBean err) {

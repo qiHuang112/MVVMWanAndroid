@@ -16,7 +16,7 @@ class ToastUtil{
         msg: errorMessage,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white);
+        backgroundColor: Colors.grey,
+        textColor: Colors.black);
   }
 }
