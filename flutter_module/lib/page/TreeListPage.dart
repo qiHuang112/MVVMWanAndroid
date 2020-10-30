@@ -19,7 +19,7 @@ class TreeListPage extends StatefulWidget {
   TreeListState createState() => TreeListState(_bean);
 }
 
-class TreeListState extends State<TreeListPage> with TickerProviderStateMixin {
+class TreeListState extends State<TreeListPage> with TickerProviderStateMixin ,AutomaticKeepAliveClientMixin{
   TreeBean _bean;
 
   TreeListState(TreeBean bean) {
@@ -105,4 +105,7 @@ class TreeListState extends State<TreeListPage> with TickerProviderStateMixin {
       model.loadData(_bean.children[index].id);
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
