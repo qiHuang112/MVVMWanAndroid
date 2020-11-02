@@ -7,28 +7,45 @@ import 'package:flutter_module/model/TreeListPageModel.dart';
 import 'package:flutter_module/page/BlogItemPage.dart';
 import 'package:flutter_module/page/LoadingContainer.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class TreeListPage extends StatefulWidget {
-  TreeBean _bean;
+  TreeBean bean;
+  TreeListState state;
+  int index = 0;
 
-  TreeListPage(TreeBean bean) {
-    this._bean = bean;
-  }
+  TreeListPage(this.bean);
 
   @override
-  TreeListState createState() => TreeListState(_bean);
+  TreeListState createState() {
+    state = TreeListState();
+    return state;
+  }
+
+  void setCurrentIndex(int index) {
+    if (state == null) {
+      this.index = index;
+      createState();
+    } else {
+      state.setCurrentIndex(index);
+    }
+  }
 }
 
-class TreeListState extends State<TreeListPage> with TickerProviderStateMixin ,AutomaticKeepAliveClientMixin{
-  TreeBean _bean;
+class TreeListState extends State<TreeListPage>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  TreeListPageModel model;
 
-  TreeListState(TreeBean bean) {
-    this._bean = bean;
-  }
+  AutoScrollController controller;
 
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    super.initState();
+    controller = AutoScrollController(axis: Axis.horizontal);
+    for (Children children in widget.bean.children) {
+      children.setSelected(false);
+    }
+    widget.bean.children[widget.index].setSelected(true);
   }
 
   @override
@@ -36,13 +53,16 @@ class TreeListState extends State<TreeListPage> with TickerProviderStateMixin ,A
     return new ProviderWidget<TreeListPageModel>(
       model: TreeListPageModel(),
       onModelInit: (model) {
-        refreshList(model, 0,false);
+        this.model = model;
+        refreshList(model, widget.index, false);
+        controller.scrollToIndex(widget.index,
+            preferPosition: AutoScrollPosition.middle);
       },
       builder: (context, model, child) {
         return new LoadingContainer(
             loading: model.loading,
             error: model.error,
-            retry:()=> refreshList(model, 0,true),
+            retry: () => refreshList(model, widget.index, true),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -50,28 +70,36 @@ class TreeListState extends State<TreeListPage> with TickerProviderStateMixin ,A
                     height:
                         Theme.of(context).textTheme.headline4.fontSize * 1.4,
                     child: ListView.builder(
+                      controller: controller,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return new Container(
-                            margin: EdgeInsets.only(left: 8, bottom: 8, top: 8),
-                            child: new ChoiceChip(
-                              label: Text(
-                                _bean.children[index].name,
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: DColor.textColorPrimary),
-                              ),
-                              selected: _bean.children[index].selected,
-                              padding: EdgeInsets.only(
-                                  left: 2, right: 2, top: 1, bottom: 1),
-                              onSelected: (selected) {
-                                refreshList(model, index,false);
-                              },
-                              selectedColor: DColor.bgColorThird,
-                              backgroundColor: DColor.bgColorSecondary,
-                            ));
+                        return new AutoScrollTag(
+                          key: ValueKey(index),
+                          controller: controller,
+                          index: index,
+                          child: Container(
+                              margin:
+                                  EdgeInsets.only(left: 8, bottom: 8, top: 8),
+                              child: new ChoiceChip(
+                                label: Text(
+                                  widget.bean.children[index].name,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: DColor.textColorPrimary),
+                                ),
+                                selected: widget.bean.children[index].selected,
+                                padding: EdgeInsets.only(
+                                    left: 2, right: 2, top: 1, bottom: 1),
+                                onSelected: (selected) {
+                                  refreshTag(index);
+                                  refreshList(model, index, false);
+                                },
+                                selectedColor: DColor.bgColorThird,
+                                backgroundColor: DColor.bgColorSecondary,
+                              )),
+                        );
                       },
-                      itemCount: _bean.children.length,
+                      itemCount: widget.bean.children.length,
                     )),
                 new Expanded(
                   child: SmartRefresher(
@@ -94,15 +122,26 @@ class TreeListState extends State<TreeListPage> with TickerProviderStateMixin ,A
     );
   }
 
-  refreshList(TreeListPageModel model, int index,bool isRetry) {
-    for (Children children in _bean.children) {
-      children.setSelected(false);
-    }
-    _bean.children[index].setSelected(true);
-    if(isRetry){
-      model.retry(_bean.children[index].id);
-    }else{
-      model.loadData(_bean.children[index].id);
+  setCurrentIndex(int index) {
+    refreshTag(index);
+    controller.scrollToIndex(index, preferPosition: AutoScrollPosition.middle);
+    refreshList(model, index, false);
+  }
+
+  refreshTag(int index) {
+    setState(() {
+      for (Children children in widget.bean.children) {
+        children.setSelected(false);
+      }
+      widget.bean.children[index].setSelected(true);
+    });
+  }
+
+  refreshList(TreeListPageModel model, int index, bool isRetry) {
+    if (isRetry) {
+      model.retry(widget.bean.children[index].id);
+    } else {
+      model.loadData(widget.bean.children[index].id);
     }
   }
 
