@@ -11,5 +11,15 @@ class DString{
   static const String loading_end = '没有更多了';
 
 
+  static const String my = '我的';
+  static const String login = '登录';
+  static const String coin = '我的积分';
+  static const String rank = '积分排行';
+  static const String my_share = '我的分享';
+  static const String my_collection = '我的收藏';
+  static const String my_history = '浏览历史';
+  static const String setting = '系统设置';
+  static const String about = '关于作者';
+
 
 }

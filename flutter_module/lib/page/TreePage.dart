@@ -103,8 +103,7 @@ class _TreePageState extends State<TreeWidget>
                     ],
                   ),
                   dragDrawer = GestureDragDrawer(
-                    child: Expanded(
-                        child: Container(
+                    child: Container(
                       child: ListView.builder(
                         itemBuilder: (context, index) {
                           return new Column(
@@ -155,7 +154,7 @@ class _TreePageState extends State<TreeWidget>
                       ),
                       color: DColor.colorPrimary,
                       margin: EdgeInsets.only(bottom: 40),
-                    )),
+                    ),
                     direction: DragDirection.left,
                     childSize: size.width - 80,
                     originOffset: 0,

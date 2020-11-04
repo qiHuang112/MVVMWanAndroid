@@ -27,13 +27,14 @@ class MainActivity : BaseActivity<MainActivityViewModel, ActivityMainBinding>() 
 
     override fun initView(savedInstanceState: Bundle?) {
 
-        val fragment :FlutterFragment = FlutterFragment.NewEngineFragmentBuilder().url("tree").build()
+        val treeFragment :FlutterFragment = FlutterFragment.NewEngineFragmentBuilder().url("tree").build()
+        val myFragment :FlutterFragment = FlutterFragment.NewEngineFragmentBuilder().url("my").build()
 
         fragments = mapOf(
             R.id.nav_home to HomeFragment.instance,
             R.id.nav_article to WeChatFragment.instance,
-            R.id.nav_tree to fragment,
-            R.id.nav_me to MeFragment.instance
+            R.id.nav_tree to treeFragment,
+            R.id.nav_me to myFragment
         )
 
         mDataBinding.navView.setOnNavigationItemSelectedListener {

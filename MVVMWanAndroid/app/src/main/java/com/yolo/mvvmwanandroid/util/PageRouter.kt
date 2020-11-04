@@ -22,7 +22,7 @@ object PageRouter {
 
     val pageName: Map<String, String> = hashMapOf(
         "tree" to "tree",
-        "second" to "second",
+        "my" to "my",
         "tab" to "tab",
     )
 
