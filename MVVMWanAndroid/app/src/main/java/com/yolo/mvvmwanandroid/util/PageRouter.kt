@@ -20,17 +20,16 @@ import com.yolo.mvvmwanandroid.ui.activity.MainActivity
  */
 object PageRouter {
 
-    val pageName: Map<String, String> = hashMapOf(
+    private val pageName: Map<String, String> = hashMapOf(
         "tree" to "tree",
         "my" to "my",
-        "tab" to "tab",
+        "login" to "login",
     )
 
-    val DETAIL_ACTIVITY_PAGE_URL = "android://detailPage"
-    val FLUTTER_PAGE_URL = "android://flutterPage"
-    val MAIN_PAGE_URL = "android://mainPage"
+    private const val DETAIL_ACTIVITY_PAGE_URL = "android://detailPage"
+    private const val MAIN_PAGE_URL = "android://mainPage"
 
-    val DETAIL_KEY= "BLOG_KEY"
+    private const val DETAIL_KEY= "BLOG_KEY"
 
     fun openPageByUrl(
         context: Context,

@@ -59,7 +59,7 @@ class TreeListPageModel with ChangeNotifier{
     loadData(_id);
   }
 
-  loadMore(){
+  loadMore() async{
     if(isEnd){
       refreshController.loadNoData();
       return;

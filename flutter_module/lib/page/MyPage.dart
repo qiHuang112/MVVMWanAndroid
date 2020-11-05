@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_module/bean/LoginData.dart';
 import 'package:flutter_module/config/Color.dart';
 import 'package:flutter_module/config/String.dart';
+import 'package:flutter_module/utils/AppManager.dart';
+import 'package:flutter_boost/flutter_boost.dart';
 
 class MyPage extends StatefulWidget {
   @override
@@ -9,6 +12,14 @@ class MyPage extends StatefulWidget {
 }
 
 class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
+  LoginData loginData;
+
+  @override
+  void initState() {
+    super.initState();
+    loginData = AppManager.getLoginData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,39 +42,51 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
           SizedBox(
             height: 8,
           ),
-          Container(
-            color: DColor.colorPrimary,
-            padding: EdgeInsets.all(20),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: DColor.colorPrimary,
-                  backgroundImage: AssetImage("assets/img/ic_avatar.png"),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('ml091225@126.com'),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text('ID:22070'),
-                    ],
+          GestureDetector(
+            onTap: () {
+              FlutterBoost.singleton.open('login');
+              /*if(loginData==null){
+                FlutterBoost.singleton.open('login');
+              }*/
+            },
+            child: Container(
+              color: DColor.colorPrimary,
+              padding: EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: DColor.colorPrimary,
+                    backgroundImage: AssetImage("assets/img/ic_avatar.png"),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.black,
+                  SizedBox(
+                    width: 10,
                   ),
-                )
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(loginData != null
+                            ? loginData.nickname
+                            : DString.login),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Text(loginData != null
+                            ? DString.id + loginData.id.toString()
+                            : ''),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.black,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
           SizedBox(
@@ -71,6 +94,7 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
           ),
           Container(
             color: DColor.colorPrimary,
+            margin: EdgeInsets.only(bottom: 1),
             child: ListTile(
               leading: Icon(
                 Icons.plus_one,
@@ -113,6 +137,7 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
           ),
           Container(
             color: DColor.colorPrimary,
+            margin: EdgeInsets.fromLTRB(0, 1, 0, 1),
             child: ListTile(
               leading: Icon(
                 Icons.star,
@@ -142,6 +167,7 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
           ),
           Container(
             color: DColor.colorPrimary,
+            margin: EdgeInsets.only(bottom: 1),
             child: ListTile(
               leading: Icon(
                 Icons.info,

@@ -13,6 +13,8 @@ class DString{
 
   static const String my = '我的';
   static const String login = '登录';
+  static const String id = 'ID:';
+
   static const String coin = '我的积分';
   static const String rank = '积分排行';
   static const String my_share = '我的分享';
@@ -20,6 +22,13 @@ class DString{
   static const String my_history = '浏览历史';
   static const String setting = '系统设置';
   static const String about = '关于作者';
+
+
+  static const String account = '账号';
+  static const String password = '密码';
+  static const String register = '注册';
+  static const String userIsEmpty = '当前账号为空';
+  static const String passwordIsEmpty = '当前密码为空';
 
 
 }

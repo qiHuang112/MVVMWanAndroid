@@ -102,7 +102,7 @@ class _TreePageState extends State<TreeWidget>
                       ),
                     ],
                   ),
-                  dragDrawer = GestureDragDrawer(
+                  dragDrawer = new GestureDragDrawer(
                     child: Container(
                       child: ListView.builder(
                         itemBuilder: (context, index) {

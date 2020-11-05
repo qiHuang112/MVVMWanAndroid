@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter_module/page/LoginPage.dart';
 import 'package:flutter_module/page/MyPage.dart';
 import 'package:flutter_module/page/TreePage.dart';
 import 'package:flutter_module/utils/AppManager.dart';
@@ -25,7 +26,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     AppManager.init();
     FlutterBoost.singleton.registerPageBuilders(<String, PageBuilder>{
@@ -33,6 +33,8 @@ class _MyAppState extends State<MyApp> {
           TreeWidget(),
       'my':(String pageName, Map<String, dynamic> params, String _) =>
           MyPage(),
+      'login':(String pageName, Map<String, dynamic> params, String _) =>
+          LoginPage(),
     });
 
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());
