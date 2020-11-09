@@ -23,8 +23,9 @@ class _TreePageState extends State<TreeWidget>
   final PageController pageController = PageController();
   final ScrollController scrollController = new ScrollController();
   List<TreeListPage> pageList = List();
+  int index = 0;
 
-  GlobalKey<GestureDragDrawerState> drawerState;
+  GlobalKey<GestureDragDrawerState> drawerState = new GlobalKey<GestureDragDrawerState>();
 
   @override
   void dispose() {
@@ -68,7 +69,7 @@ class _TreePageState extends State<TreeWidget>
         },
         builder: (context, model, child) {
           tabController = TabController(length: model.list.length, vsync: this);
-          drawerState = new GlobalKey<GestureDragDrawerState>();
+          tabController.index = index;
           return new LoadingContainer(
               loading: model.loading,
               error: model.error,
@@ -90,14 +91,20 @@ class _TreePageState extends State<TreeWidget>
                           indicatorSize: TabBarIndicatorSize.label,
                           tabs:
                               model.list.map((e) => Tab(text: e.name)).toList(),
-                          onTap: (index) => pageController.animateToPage(index,
-                              duration: kTabScrollDuration, curve: Curves.ease),
+                          onTap: (index) {
+                            pageController.animateToPage(index,
+                                duration: kTabScrollDuration, curve: Curves.ease);
+                            this.index =index;
+                          } ,
                         ),
                       ),
                       Expanded(
                         child: PageView(
                           controller: pageController,
-                          onPageChanged: (index) => tabController.index = index,
+                          onPageChanged: (index) {
+                            tabController.index = index;
+                            this.index = index;
+                          } ,
                           children: initPage(model),
                         ),
                       ),
