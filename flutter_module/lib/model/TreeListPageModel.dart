@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_module/api/Api.dart';
 import 'package:flutter_module/api/ApiService.dart';
 import 'package:flutter_module/bean/Bean.dart';
 import 'package:flutter_module/bean/Blog.dart';
@@ -22,8 +23,8 @@ class TreeListPageModel with ChangeNotifier{
     page = 0;
     isEnd = false;
     list.clear();
-    String url = "${ApiService.tree_detail_url}$page/json?cid=$_id";
-    ApiService.getData(url,success: (result){
+    String url = "${Api.TREE_DETAIL}$page/json?cid=$_id";
+    ApiService.getInstance().getData(url,success: (result){
       var pageData = PageData.fromJson(result);
       if(pageData!=null){
         List responseList = pageData.datas;
@@ -64,8 +65,8 @@ class TreeListPageModel with ChangeNotifier{
       refreshController.loadNoData();
       return;
     }
-    String url = "${ApiService.tree_detail_url}$page/json?cid=$_id";
-    ApiService.getData(url,success: (result){
+    String url = "${Api.TREE_DETAIL}$page/json?cid=$_id";
+    ApiService.getInstance().getData(url,success: (result){
       var pageData = PageData.fromJson(result);
       if(pageData!=null){
         List responseList = pageData.datas;

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_module/api/Api.dart';
 import 'package:flutter_module/api/ApiService.dart';
 import 'package:flutter_module/bean/Error.dart';
 import 'package:flutter_module/bean/Tree.dart';
@@ -10,7 +11,7 @@ class TreePageModel with ChangeNotifier{
   bool error = false;
 
   void loadData() async{
-    ApiService.getData(ApiService.tree_url,
+    ApiService.getInstance().getData(Api.TREE,
     success: (result){
       List responseList = result as List;
       List<TreeBean> treeList = responseList

@@ -1,30 +1,57 @@
 import 'dart:convert';
 
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter_module/api/Api.dart';
 import 'package:flutter_module/bean/Bean.dart';
 import 'package:flutter_module/bean/Error.dart';
-import 'package:flutter_module/utils/AppManager.dart';
-import 'package:flutter_module/utils/HttpConstant.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_boost/flutter_boost.dart';
 
 class ApiService {
-  ApiService._();
+  static String _baseUrl = Api.BASE_URL;
+  static ApiService instance;
 
-  static final base_url = "https://wanandroid.com/";
+  Dio dio;
+  BaseOptions options;
 
-  static final tree_url = "${base_url}tree/json";
+  static ApiService getInstance() {
+    if (instance == null) {
+      instance = ApiService();
+    }
+    return instance;
+  }
 
-  static final tree_detail_url = "${base_url}article/list/";
+  ApiService() {
+    options = BaseOptions(
+      // 访问url
+      baseUrl: _baseUrl,
+      // 连接超时时间
+      connectTimeout: 5000,
+      // 响应流收到数据的间隔
+      receiveTimeout: 15000,
+      // http请求头
+      headers: {"version": "1.0.0"},
+      // 接收响应数据的格式
+      responseType: ResponseType.plain,
+    );
+    dio = Dio(options);
+    // 在拦截其中加入Cookie管理器
+    dio.interceptors.add(CookieManager(CookieJar()));
+  }
 
-  static final login_url = "${base_url}user/login";
-
-  static getData(String url,
-      {Function success, Function fail, Function complete}) async {
+  getData(String url,
+      {data,
+      options,
+      cancelToken,
+      Function success,
+      Function fail,
+      Function complete}) async {
     try {
-      var response = await http.get(url, headers: HttpConstant.httpHeader);
+      var response = await dio.get(url,
+          queryParameters: data, options: options, cancelToken: cancelToken);
       if (response.statusCode == 200) {
-        var result =
-            json.decode(AppManager.utf8decoder.convert(response.bodyBytes));
-        var baseResponse = ApiResponse.fromJson(result);
+        var baseResponse = ApiResponse.fromJson(json.decode(response.data));
         if (baseResponse != null) {
           switch (baseResponse.errorCode) {
             case 0:
@@ -33,6 +60,7 @@ class ApiService {
             case 1001:
               ErrorBean error = ErrorBean("未登录", 1001);
               fail(error);
+              FlutterBoost.singleton.open('login');
               break;
           }
         } else {
@@ -52,14 +80,18 @@ class ApiService {
     }
   }
 
-  static postData(String url, Map<String, Object> maps,
-      {Function success, Function fail, Function complete}) async {
+  postData(String url,
+      {data,
+      options,
+      cancelToken,
+      Function success,
+      Function fail,
+      Function complete}) async {
     try {
-      var response = await http.post(url, body: maps,encoding: Utf8Codec());
+      var response = await dio.post(url,
+          queryParameters: data, options: options, cancelToken: cancelToken);
       if (response.statusCode == 200) {
-        var result =
-        json.decode(AppManager.utf8decoder.convert(response.bodyBytes));
-        var baseResponse = ApiResponse.fromJson(result);
+        var baseResponse = ApiResponse.fromJson(json.decode(response.data));
         if (baseResponse != null) {
           switch (baseResponse.errorCode) {
             case 0:
@@ -68,6 +100,7 @@ class ApiService {
             case 1001:
               ErrorBean error = ErrorBean("未登录", 1001);
               fail(error);
+              FlutterBoost.singleton.open('login');
               break;
           }
         } else {

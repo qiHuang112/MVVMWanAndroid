@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_module/api/Api.dart';
 import 'package:flutter_module/api/ApiService.dart';
 import 'package:flutter_module/bean/Error.dart';
 import 'package:flutter_module/bean/LoginData.dart';
@@ -18,7 +19,7 @@ class LoginPageModel with ChangeNotifier {
     map['username'] = userName;
     map['password'] = password;
 
-    ApiService.postData(ApiService.login_url, map,
+    ApiService.getInstance().postData(Api.LOGIN, data: map,
         success: (result) {
           data = LoginData.fromJson(result);
           String userData = json.encode(result);
