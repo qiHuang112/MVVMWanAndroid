@@ -19,71 +19,21 @@ class GestureDragDrawer extends StatefulWidget {
   final double parentHeight;
 
   GestureDragDrawer(
-      {this.child, //拖拽组件要展示的子内容
+      {Key key,
+        this.child, //拖拽组件要展示的子内容
       this.childSize = 0, //子内容的大小
       this.originOffset = 0, //预设偏移量
       this.parentWidth = 0, //父级组件的宽度 当拖拽组件在bottom和right时需要用到
       this.parentHeight = 0, //父级组件的高度
-      this.direction = DragDirection.left});
-
-  _GestureDragDrawerState state;
+      this.direction = DragDirection.left}):super(key:key);
 
   @override
-  _GestureDragDrawerState createState() {
-    state = _GestureDragDrawerState();
-    return state;
-  }
+  GestureDragDrawerState createState() => GestureDragDrawerState();
 
-  setToMaxAnimation() {
-    switch (direction) {
-      case DragDirection.top:
-        state.setToMaxAnimation();
-        state._toMaxAnimationController.forward(from: state.offsetY);
-        break;
-      case DragDirection.bottom:
-        state.setToMaxAnimation();
-        state._toMaxAnimationController.reset();
-        state._toMaxAnimationController.forward();
-        break;
-      case DragDirection.left:
-        state.setToMaxAnimation();
-        state._toMaxAnimationController.forward(from: state.offsetX);
 
-        break;
-      case DragDirection.right:
-        state.setToMaxAnimation();
-        state._toMaxAnimationController.reset();
-        state._toMaxAnimationController.forward();
-        break;
-    }
-  }
-
-  setCallBackAnimation() {
-    switch (direction) {
-      case DragDirection.top:
-        state.setCallBackAnimation();
-        state._callbackAnimationController.forward(from: state.offsetY);
-        break;
-      case DragDirection.bottom:
-        state.setCallBackAnimation();
-        state._callbackAnimationController.reset();
-        state._callbackAnimationController.forward();
-        break;
-      case DragDirection.left:
-        state.setCallBackAnimation();
-        state._callbackAnimationController.forward(from: state.offsetX);
-
-        break;
-      case DragDirection.right:
-        state.setCallBackAnimation();
-        state._callbackAnimationController.reset();
-        state._callbackAnimationController.forward();
-        break;
-    }
-  }
 }
 
-class _GestureDragDrawerState extends State<GestureDragDrawer>
+class GestureDragDrawerState extends State<GestureDragDrawer>
     with TickerProviderStateMixin {
   /// 初始化状态:设置宽度、起始偏移量、最小偏移量、中间偏移量、最大偏移量
   _initValue() {
@@ -176,6 +126,62 @@ class _GestureDragDrawerState extends State<GestureDragDrawer>
           }
         });
       });
+  }
+
+  openOrClose(){
+    if(offsetX == 0.0){
+      autoCallBackAnimation();
+    }else{
+      autoToMaxAnimation();
+
+    }
+  }
+
+
+  autoToMaxAnimation() {
+    switch (widget.direction) {
+      case DragDirection.top:
+        setToMaxAnimation();
+        _toMaxAnimationController.forward(from: offsetY);
+        break;
+      case DragDirection.bottom:
+        setToMaxAnimation();
+        _toMaxAnimationController.reset();
+        _toMaxAnimationController.forward();
+        break;
+      case DragDirection.left:
+        setToMaxAnimation();
+        _toMaxAnimationController.forward(from: offsetX);
+        break;
+      case DragDirection.right:
+        setToMaxAnimation();
+        _toMaxAnimationController.reset();
+        _toMaxAnimationController.forward();
+        break;
+    }
+  }
+
+  autoCallBackAnimation() {
+    switch (widget.direction) {
+      case DragDirection.top:
+        setCallBackAnimation();
+        _callbackAnimationController.forward(from: offsetY);
+        break;
+      case DragDirection.bottom:
+        setCallBackAnimation();
+        _callbackAnimationController.reset();
+        _callbackAnimationController.forward();
+        break;
+      case DragDirection.left:
+        setCallBackAnimation();
+        _callbackAnimationController.forward(from: offsetX);
+        break;
+      case DragDirection.right:
+        setCallBackAnimation();
+        _callbackAnimationController.reset();
+        _callbackAnimationController.forward();
+        break;
+    }
   }
 
   /// 偏移量最大值

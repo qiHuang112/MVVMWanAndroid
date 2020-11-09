@@ -24,7 +24,7 @@ class _TreePageState extends State<TreeWidget>
   final ScrollController scrollController = new ScrollController();
   List<TreeListPage> pageList = List();
 
-  GestureDragDrawer dragDrawer;
+  GlobalKey<GestureDragDrawerState> drawerState;
 
   @override
   void dispose() {
@@ -53,7 +53,7 @@ class _TreePageState extends State<TreeWidget>
               Icons.filter_list,
               color: Colors.black,
             ),
-            onPressed: () => dragDrawer.setToMaxAnimation(),
+            onPressed: () => drawerState.currentState.openOrClose(),
           )
         ],
         brightness: Brightness.light,
@@ -68,6 +68,7 @@ class _TreePageState extends State<TreeWidget>
         },
         builder: (context, model, child) {
           tabController = TabController(length: model.list.length, vsync: this);
+          drawerState = new GlobalKey<GestureDragDrawerState>();
           return new LoadingContainer(
               loading: model.loading,
               error: model.error,
@@ -102,7 +103,8 @@ class _TreePageState extends State<TreeWidget>
                       ),
                     ],
                   ),
-                  dragDrawer = new GestureDragDrawer(
+                  new GestureDragDrawer(
+                    key:drawerState,
                     child: Container(
                       child: ListView.builder(
                         itemBuilder: (context, index) {
@@ -138,14 +140,15 @@ class _TreePageState extends State<TreeWidget>
                                             pageList[index].setCurrentIndex(
                                                 model.list[index].children
                                                     .indexOf(e));
-                                            dragDrawer.setCallBackAnimation();
+                                            drawerState.currentState.autoCallBackAnimation();
                                           },
                                           selectedColor: DColor.bgColorThird,
                                           backgroundColor:
                                               DColor.bgColorSecondary,
                                         )))
                                     .toList(),
-                              )
+                              ),
+                              SizedBox(height: 1)
                             ],
                           );
                         },
