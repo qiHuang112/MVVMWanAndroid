@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_module/api/Api.dart';
+import 'package:flutter_module/api/ApiService.dart';
 import 'package:flutter_module/bean/Blog.dart';
+import 'package:flutter_module/bean/Error.dart';
 import 'package:flutter_module/config/Color.dart';
 import 'package:flutter_module/config/String.dart';
+import 'package:flutter_module/utils/ToastUtil.dart';
 import 'package:flutter_module/widget/BlogTitleWidget.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 
@@ -133,14 +137,14 @@ class BlogItemState extends State<BlogItemPage> {
                             icon: Icon(
                               Icons.star_border,
                             ),
-                            //onPressed: () => _collect(uniqueKey),
+                            onPressed: () => _collect(),
                           )
                         : IconButton(
                             alignment: Alignment.centerRight,
                             icon: Icon(
                               Icons.star,
                             ),
-                            //onPressed: () => _collect(uniqueKey),
+                            onPressed: () => _collect(),
                           ),
                   ),
                 ],
@@ -154,4 +158,23 @@ class BlogItemState extends State<BlogItemPage> {
 
   @override
   bool get wantKeepAlive => true;
+
+  _collect() {
+    ApiService.getInstance().postData(
+      blog.collect == false
+          ?"${Api.COLLECT}${blog.id}/json"
+          :"${Api.UN_COLLECT_ORIGIN_ID}${blog.id}/json",
+      success: (result){
+        setState(() {
+          blog.setCollect(!blog.collect);
+          blog.collect == true?ToastUtil.showTip(DString.collect_success)
+          :ToastUtil.showTip(DString.unCollect_success);
+        });
+      },
+      fail: (ErrorBean errorBean){
+        blog.collect == true?ToastUtil.showTip(DString.unCollect_failed)
+            :ToastUtil.showTip(DString.collect_failed);
+      }
+    );
+  }
 }

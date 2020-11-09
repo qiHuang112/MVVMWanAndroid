@@ -98,6 +98,10 @@ class Blog {
 
   int get zan => _zan;
 
+  setCollect(bool collect){
+    _collect = collect;
+  }
+
   Blog(
       {String apkLink,
       int audit,

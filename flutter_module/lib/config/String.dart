@@ -30,5 +30,9 @@ class DString{
   static const String userIsEmpty = '当前账号为空';
   static const String passwordIsEmpty = '当前密码为空';
 
+  static const String collect_failed = '收藏失败';
+  static const String collect_success = '收藏成功';
+  static const String unCollect_failed = '取消收藏失败';
+  static const String unCollect_success = '取消收藏成功';
 
 }
