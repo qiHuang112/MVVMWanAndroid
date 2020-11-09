@@ -1,12 +1,6 @@
 class Api{
   static const String BASE_URL = "https://www.wanandroid.com/";
 
-  //收藏站内文章
-  static const String COLLECT = "lg/collect/";
-
-  //取消收藏-文章列表
-  static const String UN_COLLECT_ORIGIN_ID = "lg/uncollect_originId/";
-
   //登录
   static const String LOGIN = "user/login";
 
@@ -31,4 +25,11 @@ class Api{
 
   //取消收藏
   static const String UN_COLLECT = "lg/uncollect/";
+
+  //取消收藏-文章列表
+  static const String UN_COLLECT_ORIGIN_ID = "lg/uncollect_originId/";
+
+
+  //收藏站内文章
+  static const String COLLECT = "lg/collect/";
 }
