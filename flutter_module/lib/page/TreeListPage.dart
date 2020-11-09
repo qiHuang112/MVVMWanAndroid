@@ -4,8 +4,8 @@ import 'package:flutter_module/bean/Tree.dart';
 import 'package:flutter_module/config/Color.dart';
 import 'package:flutter_module/model/ProviderWidget.dart';
 import 'package:flutter_module/model/TreeListPageModel.dart';
-import 'package:flutter_module/page/BlogItemPage.dart';
-import 'package:flutter_module/page/LoadingContainer.dart';
+import 'package:flutter_module/widget/BlogItemPage.dart';
+import 'package:flutter_module/widget/LoadingContainer.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 

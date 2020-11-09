@@ -6,8 +6,8 @@ import 'package:flutter_module/bean/Tree.dart';
 import 'package:flutter_module/config/Color.dart';
 import 'package:flutter_module/model/ProviderWidget.dart';
 import 'package:flutter_module/model/TreePageModel.dart';
-import 'package:flutter_module/page/GestureDragDrawer.dart';
-import 'package:flutter_module/page/LoadingContainer.dart';
+import 'package:flutter_module/widget/GestureDragDrawer.dart';
+import 'package:flutter_module/widget/LoadingContainer.dart';
 import 'package:flutter_module/page/TreeListPage.dart';
 
 import '../config/String.dart';

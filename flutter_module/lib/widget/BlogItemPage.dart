@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_module/bean/Blog.dart';
 import 'package:flutter_module/config/Color.dart';
 import 'package:flutter_module/config/String.dart';
-import 'package:flutter_module/page/BlogTitleWidget.dart';
+import 'package:flutter_module/widget/BlogTitleWidget.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 
 class BlogItemPage extends StatefulWidget {
