@@ -33,6 +33,7 @@ class Blog {
   int _userId;
   int _visible;
   int _zan;
+  int _originId;
 
   String get apkLink => _apkLink;
 
@@ -98,7 +99,9 @@ class Blog {
 
   int get zan => _zan;
 
-  setCollect(bool collect){
+  int get originId => _originId;
+
+  setCollect(bool collect) {
     _collect = collect;
   }
 
@@ -134,7 +137,8 @@ class Blog {
       int type,
       int userId,
       int visible,
-      int zan}) {
+      int zan,
+      int originId}) {
     _apkLink = apkLink;
     _audit = audit;
     _author = author;
@@ -167,6 +171,7 @@ class Blog {
     _userId = userId;
     _visible = visible;
     _zan = zan;
+    _originId = originId;
   }
 
   Blog.fromJson(dynamic json) {
@@ -207,6 +212,7 @@ class Blog {
     _userId = json["userId"];
     _visible = json["visible"];
     _zan = json["zan"];
+    _originId = json["originId"];
   }
 
   Map<String, dynamic> toJson() {
@@ -245,6 +251,7 @@ class Blog {
     map["userId"] = _userId;
     map["visible"] = _visible;
     map["zan"] = _zan;
+    map["originId"] = _originId;
     return map;
   }
 }

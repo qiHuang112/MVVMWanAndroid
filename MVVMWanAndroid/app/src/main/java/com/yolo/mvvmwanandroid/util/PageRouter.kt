@@ -24,6 +24,7 @@ object PageRouter {
         "tree" to "tree",
         "my" to "my",
         "login" to "login",
+        "collection" to "collection",
     )
 
     private const val DETAIL_ACTIVITY_PAGE_URL = "android://detailPage"

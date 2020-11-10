@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:flutter_module/page/CollectionPage.dart';
 import 'package:flutter_module/page/LoginPage.dart';
 import 'package:flutter_module/page/MyPage.dart';
 import 'package:flutter_module/page/TreePage.dart';
@@ -35,6 +36,8 @@ class _MyAppState extends State<MyApp> {
           MyPage(),
       'login':(String pageName, Map<String, dynamic> params, String _) =>
           LoginPage(),
+      'collection':(String pageName, Map<String, dynamic> params, String _) =>
+          CollectionPage(),
     });
 
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());

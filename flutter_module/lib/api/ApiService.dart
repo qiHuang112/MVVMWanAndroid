@@ -97,7 +97,7 @@ class ApiService {
             case 0:
               success(baseResponse.data);
               break;
-            case 1001:
+            case -1001:
               ErrorBean error = ErrorBean("未登录", 1001);
               fail(error);
               FlutterBoost.singleton.open('login');

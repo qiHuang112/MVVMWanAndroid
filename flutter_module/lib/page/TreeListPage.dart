@@ -110,7 +110,7 @@ class TreeListState extends State<TreeListPage>
                     child: ListView.builder(
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
-                        return BlogItemPage(model.list[index]);
+                        return BlogItemPage(model.list[index],false);
                       },
                       itemCount: model.list.length,
                     ),

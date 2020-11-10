@@ -147,6 +147,7 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
                 DString.my_collection,
                 style: TextStyle(fontSize: 14, color: DColor.textColorPrimary),
               ),
+              onTap: ()=> FlutterBoost.singleton.open('collection'),
             ),
           ),
           Container(

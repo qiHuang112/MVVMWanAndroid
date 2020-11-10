@@ -12,8 +12,9 @@ import 'package:flutter_boost/flutter_boost.dart';
 
 class BlogItemPage extends StatefulWidget {
   Blog blog;
+  bool isCollection;
 
-  BlogItemPage(this.blog);
+  BlogItemPage(this.blog,this.isCollection);
 
   @override
   BlogItemState createState() => BlogItemState();
@@ -34,7 +35,7 @@ class BlogItemState extends State<BlogItemPage> {
         elevation: 1.5,
         /*shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(14.0))),*/
-        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+        margin: EdgeInsets.only(bottom: 10),
         child: Container(
           padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
           child: Column(
@@ -43,32 +44,21 @@ class BlogItemState extends State<BlogItemPage> {
                 children: <Widget>[
                   Expanded(
                       flex: 1,
-                      child: Row(
-                        children: <Widget>[
-                          Offstage(
-                            offstage: blog.type == 0 ?? false,
-                            child: Text(
-                              DString.top,
-                              style: TextStyle(
-                                  color: DColor.colorBadge, fontSize: 12),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 5),
-                            child: Text(
-                                "${blog.author.isNotEmpty ? blog.author : blog.shareUser}",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: Theme.of(context).textTheme.caption),
-                          ),
-                        ],
-                      )),
+                      child: Container(
+                        margin: EdgeInsets.only(left: 5),
+                        child: Text(
+                            "${blog.shareUser !=null ? blog.author.isNotEmpty? blog.author : blog.shareUser: DString.anonymous}",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: Theme.of(context).textTheme.caption),
+                      )
+                  ),
                   Align(
                       alignment: Alignment.centerRight,
                       child: Container(
                         margin: EdgeInsets.only(right: 5),
                         child: Text(
-                          "${blog.chapterName}/${blog.superChapterName}",
+                          "${blog.superChapterName !=null? blog.chapterName+'/'+blog.superChapterName :blog.chapterName}",
                           style: TextStyle(
                               color: DColor.textColorThird, fontSize: 11.0),
                         ),
@@ -112,22 +102,10 @@ class BlogItemState extends State<BlogItemPage> {
                 children: <Widget>[
                   Expanded(
                       flex: 1,
-                      child: Row(
-                        children: <Widget>[
-                          Offstage(
-                              offstage: !blog.fresh ?? true,
-                              child: Text(
-                                DString.newBlog,
-                                style: TextStyle(
-                                    color: DColor.colorBadge, fontSize: 12),
-                              )),
-                          Container(
-                            padding: EdgeInsets.only(left: 5),
-                            child: Text(blog.niceDate,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.caption),
-                          )
-                        ],
+                      child: Container(
+                        margin: EdgeInsets.only(left: 5),
+                        child: Text(blog.niceDate,
+                            style: Theme.of(context).textTheme.caption),
                       )),
                   Align(
                     alignment: Alignment.centerRight,
@@ -160,10 +138,17 @@ class BlogItemState extends State<BlogItemPage> {
   bool get wantKeepAlive => true;
 
   _collect() {
-    ApiService.getInstance().postData(
-      blog.collect == false
-          ?"${Api.COLLECT}${blog.id}/json"
-          :"${Api.UN_COLLECT_ORIGIN_ID}${blog.id}/json",
+    String url;
+    if(blog.collect){
+      if(widget.isCollection){
+        url = "${Api.UN_COLLECT_ORIGIN_ID}${blog.originId}/json";
+      }else{
+        url = "${Api.UN_COLLECT_ORIGIN_ID}${blog.id}/json";
+      }
+    }else{
+      url = "${Api.COLLECT}${blog.id}/json";
+    }
+    ApiService.getInstance().postData(url,
       success: (result){
         setState(() {
           blog.setCollect(!blog.collect);
