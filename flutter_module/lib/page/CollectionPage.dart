@@ -5,6 +5,7 @@ import 'package:flutter_module/config/String.dart';
 import 'package:flutter_module/model/CollectionPageModel.dart';
 import 'package:flutter_module/model/ProviderWidget.dart';
 import 'package:flutter_module/widget/BlogItemPage.dart';
+import 'package:flutter_module/widget/LoadingContainer.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CollectionPage extends StatefulWidget {
@@ -43,19 +44,23 @@ class CollectionPageState extends State<CollectionPage> {
               model.loadData();
             },
             builder: (context, model, child) {
-              return SmartRefresher(
-                controller: model.refreshController,
-                onRefresh: model.loadData,
-                onLoading: model.loadMore,
-                enablePullUp: true,
-                child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: (context, index) {
-                    return BlogItemPage(model.list[index],true);
-                  },
-                  itemCount: model.list.length,
-                ),
-              );
+              return LoadingContainer(
+                  loading: model.loading,
+                  retry: ()=>model.retry,
+                  error: model.error,
+                  child: SmartRefresher(
+                    controller: model.refreshController,
+                    onRefresh: model.loadData,
+                    onLoading: model.loadMore,
+                    enablePullUp: true,
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        return BlogItemPage(model.list[index], true);
+                      },
+                      itemCount: model.list.length,
+                    ),
+                  ));
             }),
       ),
     );

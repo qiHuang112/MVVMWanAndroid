@@ -20,6 +20,12 @@ class Api{
   //获取用户积分数据
   static const String COIN_INFO = "lg/coin/userinfo/json";
 
+  //获取积分排行榜
+  static const String RANK = "coin/rank/";
+
+  //获取用户积分列表
+  static const String COIN_INFO_LIST = "lg/coin/list/";
+
   //获取收藏文章列表
   static const String COLLECT_LIST = "lg/collect/list/";
 

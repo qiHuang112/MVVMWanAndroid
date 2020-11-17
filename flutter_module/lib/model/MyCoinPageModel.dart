@@ -2,25 +2,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_module/api/Api.dart';
 import 'package:flutter_module/api/ApiService.dart';
 import 'package:flutter_module/bean/Bean.dart';
-import 'package:flutter_module/bean/Blog.dart';
+import 'package:flutter_module/bean/Coin.dart';
 import 'package:flutter_module/bean/Error.dart';
 import 'package:flutter_module/utils/ToastUtil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class CollectionPageModel with ChangeNotifier {
-  List<Blog> list = List();
+class MyCoinPageModel with ChangeNotifier {
+  List<Coin> list = List();
+  MyCoin myCoin;
   bool loading = true;
   bool error = false;
-  int page = 0;
+  int page = 1;
   bool isEnd = false;
   RefreshController refreshController =
       new RefreshController(initialRefresh: false);
 
   loadData() async {
-    page = 0;
+    page = 1;
     isEnd = false;
     list.clear();
-    String url = "${Api.COLLECT_LIST}$page/json";
+    String url = "${Api.COIN_INFO_LIST}$page/json";
+    ApiService.getInstance().getData(Api.COIN_INFO,
+        success: (result) {
+          var coinData = MyCoin.fromJson(result);
+          myCoin = coinData;
+        },
+        complete: () => notifyListeners());
+
     ApiService.getInstance().getData(url,
         success: (result) {
           var pageData = PageData.fromJson(result);
@@ -28,14 +36,11 @@ class CollectionPageModel with ChangeNotifier {
             List responseList = pageData.datas;
             page = pageData.curPage + 1;
             setIsEnd(pageData);
-            List<Blog> blogList = responseList.map((model) {
-              Blog blog = Blog.fromJson(model);
-              blog.setCollect(true);
-              return blog;
-            }).toList();
+            List<Coin> coinList =
+                responseList.map((model) => Coin.fromJson(model)).toList();
+            list = coinList;
             loading = false;
             error = false;
-            list = blogList;
             refreshController.refreshCompleted();
             refreshController.footerMode.value = LoadStatus.canLoading;
           } else {
@@ -63,7 +68,7 @@ class CollectionPageModel with ChangeNotifier {
       refreshController.loadNoData();
       return;
     }
-    String url = "${Api.COLLECT_LIST}$page/json";
+    String url = "${Api.COIN_INFO_LIST}$page/json";
     ApiService.getInstance().getData(url,
         success: (result) {
           var pageData = PageData.fromJson(result);
@@ -71,12 +76,9 @@ class CollectionPageModel with ChangeNotifier {
             List responseList = pageData.datas;
             page = pageData.curPage + 1;
             setIsEnd(pageData);
-            List<Blog> blogList = responseList.map((model) {
-              Blog blog = Blog.fromJson(model);
-              blog.setCollect(true);
-              return blog;
-            }).toList();
-            list.addAll(blogList);
+            List<Coin> coinList =
+                responseList.map((model) => Coin.fromJson(model)).toList();
+            list.addAll(coinList);
             refreshController.loadComplete();
           } else {
             refreshController.loadFailed();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_boost/flutter_boost.dart';
 import 'package:flutter_module/page/CollectionPage.dart';
 import 'package:flutter_module/page/LoginPage.dart';
+import 'package:flutter_module/page/MyCoinPage.dart';
 import 'package:flutter_module/page/MyPage.dart';
 import 'package:flutter_module/page/TreePage.dart';
 import 'package:flutter_module/utils/AppManager.dart';
@@ -38,6 +39,8 @@ class _MyAppState extends State<MyApp> {
           LoginPage(),
       'collection':(String pageName, Map<String, dynamic> params, String _) =>
           CollectionPage(),
+      'mycoin':(String pageName, Map<String, dynamic> params, String _) =>
+          MyCoinPage(),
     });
 
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());

@@ -102,6 +102,7 @@ class TreeListState extends State<TreeListPage>
                       itemCount: widget.bean.children.length,
                     )),
                 new Expanded(
+                  flex: 1,
                   child: SmartRefresher(
                     controller: model.refreshController,
                     onRefresh: model.refresh,
