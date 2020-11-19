@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
@@ -7,22 +8,22 @@ import 'package:flutter_module/api/Api.dart';
 import 'package:flutter_module/bean/Bean.dart';
 import 'package:flutter_module/bean/Error.dart';
 import 'package:flutter_boost/flutter_boost.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ApiService {
   static String _baseUrl = Api.BASE_URL;
-  static ApiService instance;
+  static final ApiService _singleton = ApiService.internal();
+  static ApiService get instance => ApiService();
 
-  Dio dio;
+  static Dio _dio;
   BaseOptions options;
 
-  static ApiService getInstance() {
-    if (instance == null) {
-      instance = ApiService();
-    }
-    return instance;
+  factory ApiService(){
+    return _singleton;
   }
+  
 
-  ApiService() {
+  ApiService.internal(){
     options = BaseOptions(
       // 访问url
       baseUrl: _baseUrl,
@@ -35,9 +36,9 @@ class ApiService {
       // 接收响应数据的格式
       responseType: ResponseType.plain,
     );
-    dio = Dio(options);
+    _dio = Dio(options);
     // 在拦截其中加入Cookie管理器
-    dio.interceptors.add(CookieManager(CookieJar()));
+    _addCookie();
   }
 
   getData(String url,
@@ -48,7 +49,7 @@ class ApiService {
       Function fail,
       Function complete}) async {
     try {
-      var response = await dio.get(url,
+      var response = await _dio.get(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
       if (response.statusCode == 200) {
         var baseResponse = ApiResponse.fromJson(json.decode(response.data));
@@ -88,7 +89,7 @@ class ApiService {
       Function fail,
       Function complete}) async {
     try {
-      var response = await dio.post(url,
+      var response = await _dio.post(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
       if (response.statusCode == 200) {
         var baseResponse = ApiResponse.fromJson(json.decode(response.data));
@@ -119,4 +120,14 @@ class ApiService {
       }
     }
   }
+
+  static void _addCookie(){
+    /*Directory appDocDir = await getApplicationDocumentsDirectory();
+    //新建目录
+    var dir = Directory("$appDocDir/cookies");
+    await dir.create();
+    var cookieJar = PersistCookieJar(dir: dir.path);*/
+    _dio.interceptors.add(CookieManager(CookieJar()));
+  }
+
 }

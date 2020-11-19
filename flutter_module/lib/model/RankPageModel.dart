@@ -2,32 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_module/api/Api.dart';
 import 'package:flutter_module/api/ApiService.dart';
 import 'package:flutter_module/bean/Bean.dart';
-import 'package:flutter_module/bean/Coin.dart';
 import 'package:flutter_module/bean/Error.dart';
+import 'package:flutter_module/bean/Rank.dart';
 import 'package:flutter_module/utils/ToastUtil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class MyCoinPageModel with ChangeNotifier {
-  List<Coin> list = List();
-  MyCoin myCoin;
+class RankPageModel with ChangeNotifier{
+
+  List<Rank> list = [];
   bool loading = true;
   bool error = false;
   int page = 1;
   bool isEnd = false;
   RefreshController refreshController =
-      new RefreshController(initialRefresh: false);
+  new RefreshController(initialRefresh: false);
 
   loadData() async {
     page = 1;
     isEnd = false;
     list.clear();
-    String url = "${Api.COIN_INFO_LIST}$page/json";
-    ApiService.instance.getData(Api.COIN_INFO,
-        success: (result) {
-          var coinData = MyCoin.fromJson(result);
-          myCoin = coinData;
-        },
-        complete: () => notifyListeners());
+    String url = "${Api.RANK}$page/json";
 
     ApiService.instance.getData(url,
         success: (result) {
@@ -36,8 +30,8 @@ class MyCoinPageModel with ChangeNotifier {
             List responseList = pageData.datas;
             page = pageData.curPage + 1;
             setIsEnd(pageData);
-            List<Coin> coinList =
-                responseList.map((model) => Coin.fromJson(model)).toList();
+            List<Rank> coinList =
+            responseList.map((model) => Rank.fromJson(model)).toList();
             list = coinList;
             loading = false;
             error = false;
@@ -68,7 +62,7 @@ class MyCoinPageModel with ChangeNotifier {
       refreshController.loadNoData();
       return;
     }
-    String url = "${Api.COIN_INFO_LIST}$page/json";
+    String url = "${Api.RANK}$page/json";
     ApiService.instance.getData(url,
         success: (result) {
           var pageData = PageData.fromJson(result);
@@ -76,8 +70,8 @@ class MyCoinPageModel with ChangeNotifier {
             List responseList = pageData.datas;
             page = pageData.curPage + 1;
             setIsEnd(pageData);
-            List<Coin> coinList =
-                responseList.map((model) => Coin.fromJson(model)).toList();
+            List<Rank> coinList =
+            responseList.map((model) => Rank.fromJson(model)).toList();
             list.addAll(coinList);
             refreshController.loadComplete();
           } else {
@@ -94,4 +88,5 @@ class MyCoinPageModel with ChangeNotifier {
   void setIsEnd(PageData pageData) {
     isEnd = pageData.offset >= pageData.total;
   }
+
 }

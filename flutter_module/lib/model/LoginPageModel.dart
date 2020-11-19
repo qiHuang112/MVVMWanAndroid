@@ -19,7 +19,7 @@ class LoginPageModel with ChangeNotifier {
     map['username'] = userName;
     map['password'] = password;
 
-    ApiService.getInstance().postData(Api.LOGIN, data: map,
+    ApiService.instance.postData(Api.LOGIN, data: map,
         success: (result) {
           data = LoginData.fromJson(result);
           String userData = json.encode(result);

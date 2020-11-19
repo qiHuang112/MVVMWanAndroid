@@ -4,6 +4,7 @@ import 'package:flutter_module/page/CollectionPage.dart';
 import 'package:flutter_module/page/LoginPage.dart';
 import 'package:flutter_module/page/MyCoinPage.dart';
 import 'package:flutter_module/page/MyPage.dart';
+import 'package:flutter_module/page/RankPage.dart';
 import 'package:flutter_module/page/TreePage.dart';
 import 'package:flutter_module/utils/AppManager.dart';
 
@@ -41,6 +42,8 @@ class _MyAppState extends State<MyApp> {
           CollectionPage(),
       'mycoin':(String pageName, Map<String, dynamic> params, String _) =>
           MyCoinPage(),
+      'rank':(String pageName, Map<String, dynamic> params, String _) =>
+          RankPage(),
     });
 
     FlutterBoost.singleton.addBoostNavigatorObserver(TestBoostNavigatorObserver());

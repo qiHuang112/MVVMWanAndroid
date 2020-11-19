@@ -21,7 +21,7 @@ class CollectionPageModel with ChangeNotifier {
     isEnd = false;
     list.clear();
     String url = "${Api.COLLECT_LIST}$page/json";
-    ApiService.getInstance().getData(url,
+    ApiService.instance.getData(url,
         success: (result) {
           var pageData = PageData.fromJson(result);
           if (pageData != null) {
@@ -64,7 +64,7 @@ class CollectionPageModel with ChangeNotifier {
       return;
     }
     String url = "${Api.COLLECT_LIST}$page/json";
-    ApiService.getInstance().getData(url,
+    ApiService.instance.getData(url,
         success: (result) {
           var pageData = PageData.fromJson(result);
           if (pageData != null) {

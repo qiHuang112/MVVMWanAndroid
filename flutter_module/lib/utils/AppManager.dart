@@ -16,7 +16,7 @@ class AppManager{
   }
 
 
-  static LoginData  getLoginData(){
+  static LoginData getLoginData(){
      String data =  prefs.get(Config.SP_USER_INFO);
      if(data ==null || data.isEmpty){
        return null;

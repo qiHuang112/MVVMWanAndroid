@@ -11,7 +11,7 @@ class TreePageModel with ChangeNotifier{
   bool error = false;
 
   void loadData() async{
-    ApiService.getInstance().getData(Api.TREE,
+    ApiService.instance.getData(Api.TREE,
     success: (result){
       List responseList = result as List;
       List<TreeBean> treeList = responseList

@@ -59,16 +59,14 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
                     backgroundImage: AssetImage("assets/img/ic_avatar.png"),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                   Expanded(
                     flex: 1,
-                    child: Column(
+                    child: loginData != null ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(loginData != null
-                            ? loginData.nickname
-                            : DString.login),
+                        Text(loginData.nickname),
                         SizedBox(
                           height: 6,
                         ),
@@ -76,6 +74,11 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
                             ? DString.id + loginData.id.toString()
                             : ''),
                       ],
+                    ):Text(
+                        DString.login,
+                      style: TextStyle(
+                        fontSize: 20
+                      ),
                     ),
                   ),
                   Align(
@@ -118,6 +121,7 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
                 DString.rank,
                 style: TextStyle(fontSize: 14, color: DColor.textColorPrimary),
               ),
+              onTap: ()=> FlutterBoost.singleton.open('rank'),
             ),
           ),
           SizedBox(
@@ -200,5 +204,5 @@ class MyPageState extends State<MyPage> with AutomaticKeepAliveClientMixin {
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 }

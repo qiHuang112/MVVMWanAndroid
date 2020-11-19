@@ -148,7 +148,7 @@ class BlogItemState extends State<BlogItemPage> {
     }else{
       url = "${Api.COLLECT}${blog.id}/json";
     }
-    ApiService.getInstance().postData(url,
+    ApiService.instance.postData(url,
       success: (result){
         setState(() {
           blog.setCollect(!blog.collect);

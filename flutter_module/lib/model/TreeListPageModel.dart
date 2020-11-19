@@ -24,7 +24,7 @@ class TreeListPageModel with ChangeNotifier{
     isEnd = false;
     list.clear();
     String url = "${Api.TREE_DETAIL}$page/json?cid=$_id";
-    ApiService.getInstance().getData(url,success: (result){
+    ApiService.instance.getData(url,success: (result){
       var pageData = PageData.fromJson(result);
       if(pageData!=null){
         List responseList = pageData.datas;
@@ -66,7 +66,7 @@ class TreeListPageModel with ChangeNotifier{
       return;
     }
     String url = "${Api.TREE_DETAIL}$page/json?cid=$_id";
-    ApiService.getInstance().getData(url,success: (result){
+    ApiService.instance.getData(url,success: (result){
       var pageData = PageData.fromJson(result);
       if(pageData!=null){
         List responseList = pageData.datas;
