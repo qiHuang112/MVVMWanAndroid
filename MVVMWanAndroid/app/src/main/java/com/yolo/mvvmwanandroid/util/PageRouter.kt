@@ -27,6 +27,7 @@ object PageRouter {
         "collection" to "collection",
         "mycoin" to "mycoin",
         "rank" to "rank",
+        "share" to "share",
     )
 
     private const val DETAIL_ACTIVITY_PAGE_URL = "android://detailPage"

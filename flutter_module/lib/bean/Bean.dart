@@ -1,5 +1,7 @@
 import 'dart:core';
 
+import 'package:flutter_module/bean/Rank.dart';
+
 class ApiResponse {
   Object _data;
   int _errorCode;
@@ -96,4 +98,33 @@ class PageData {
     map["total"] = _total;
     return map;
   }
+}
+
+class ShareData{
+  PageData _shareArticles;
+  Rank _coinInfo;
+
+  PageData get pageData => _shareArticles;
+  Rank get rank => _coinInfo;
+  
+  ShareData(
+  {PageData shareArticles,
+    Rank coinInfo}
+      ){
+    _shareArticles = shareArticles;
+    _coinInfo = coinInfo;
+  }
+  
+  ShareData.fromJson(dynamic json){
+    _shareArticles = PageData.fromJson(json["shareArticles"]);
+    _coinInfo = Rank.fromJson(json["coinInfo"]);
+  }
+
+  Map<String,dynamic> toJson(){
+    var map = <String,dynamic>{};
+    map["shareArticles"] = _shareArticles.toJson();
+    map["coinInfo"] = _coinInfo.toJson();
+    return map;
+  }
+
 }

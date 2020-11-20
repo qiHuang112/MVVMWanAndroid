@@ -38,4 +38,7 @@ class Api{
 
   //收藏站内文章
   static const String COLLECT = "lg/collect/";
+
+  //收藏站内文章
+  static const String SHARE = "user/lg/private_articles/";
 }
